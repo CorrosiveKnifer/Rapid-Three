@@ -1,0 +1,208 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3760574948659766562
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2046509230499073002}
+  - component: {fileID: 6054692705830799736}
+  - component: {fileID: 701658618}
+  - component: {fileID: 701658617}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2046509230499073002
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3760574948659766562}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6054692705830799736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3760574948659766562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73ea781531d74804e842de4748e12ea0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Spell1: {fileID: 0}
+  Spell2: {fileID: 0}
+  Spell3: {fileID: 0}
+  Tower1: {fileID: 0}
+  Tower2: {fileID: 0}
+  Tower3: {fileID: 0}
+  Tower4: {fileID: 0}
+  TowerDestroy: {fileID: 0}
+  Minion: {fileID: 0}
+  Demon: {fileID: 0}
+  LifeBar: {fileID: 0}
+  ManaBar: {fileID: 0}
+  MinionBloodBar: {fileID: 0}
+  RockHealth: {fileID: 0}
+  SelectFrame: {fileID: 0}
+  levelLoader: {fileID: 0}
+  GameTime: 0
+  BasicEnemy: {fileID: 7686139726918785634, guid: 989aebc2b6540cf4a81539369019821f,
+    type: 3}
+  player: {fileID: 0}
+  maxVolumeDistance: 25
+  lives: 100
+  blood: 300
+  BloodDisplay: {fileID: 0}
+  WaveCount: {fileID: 0}
+  EnemyCount: {fileID: 0}
+  NextWave: {fileID: 0}
+  ActivePos: {fileID: 0}
+  DeactivePos: {fileID: 0}
+--- !u!82 &701658618
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3760574948659766562}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: f8dba6c1e08eefe47ba42f38aa7b18d4, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &701658617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3760574948659766562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d46ff72df1a0b8540907e8f8d4e3c972, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawners:
+  - {fileID: 0}
+  - {fileID: 0}
+  enemyPrefabs:
+  - {fileID: 7686139726918785634, guid: 02e5ae4978acc0444b4662b1be67279a, type: 3}
+  - {fileID: 7686139726918785634, guid: bf9c932ecafa9464ba48f5e583035418, type: 3}
+  - {fileID: 7686139726918785634, guid: 302ecface7bfb2e459652172d8f40c39, type: 3}
+  - {fileID: 7686139726918785634, guid: d99a5bbcc2307bc4b9df6081100236fe, type: 3}
+  - {fileID: 7686139726918785634, guid: a346f067626042343ae9c280385f06a9, type: 3}
+  waveCode:
+  - 1.5,4,0,0,0,0
+  - 1.0,8,0,0,0,0
+  - 1.0,10,2,0,0,0
+  - 0.01,45,0,0,0,0
+  - 1.0,4,8,1,0,0
+  - 1.0,0,4,4,2,0
+  - 0.8,0,8,4,10,0
+  - 0.8,0,16,6,15,0
+  - 0.8,4,8,16,20,0
+  - 0.05,0,0,0,0,16
+  waveIndex: 0
+  enemyCount: 0
+  loader: {fileID: 0}
+  IsWaveOver: 1
