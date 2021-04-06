@@ -61,21 +61,6 @@ public class LevelLoader : MonoBehaviour
             hasWon = true;
             LoadNextLevel();
         }
-
-        if (Input.GetKeyDown(KeyCode.K)) // Kill all enemies
-        {
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-            for (int i = 0; i < enemies.Length; i++)
-            {
-                enemies[i].GetComponentInParent<EnemyScript>().DealDamageToEnemy(9999);
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.I)) // Gain 100 blood
-        {
-            GameManager.instance.blood += 100;
-        }
     }
 
     public void QuitGame()
