@@ -4,6 +4,32 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    #region Singleton
+
+    public static CameraController instance = null;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            Cursor.lockState = CursorLockMode.Confined;
+        }
+        else
+        {
+            Debug.LogError("Second Instance of GameManager was created, this instance was destroyed.");
+            Destroy(this);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (instance == this)
+            instance = null;
+    }
+
+    #endregion
+
     public GameObject referenceObject;
 
     [Header("Camera Settings")]
@@ -14,6 +40,7 @@ public class CameraController : MonoBehaviour
     public float sizeMotionLerp = 0.05f;
 
     private Camera myCamera;
+    private bool IsShaking = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,10 +51,7 @@ public class CameraController : MonoBehaviour
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.K))
-        {
-            StartCoroutine(Shake(1.0f, 1.0f));
-        }
+        
     }
     // Update is called once per frame
     void FixedUpdate()
@@ -48,8 +72,18 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    public IEnumerator Shake(float magintude, float fixedTime = 1.0f)
+    public void StartShake(float magintude, float fixedTime = 1.0f)
     {
+        StartCoroutine(Shake(magintude, fixedTime));
+    }
+
+    private IEnumerator Shake(float magintude, float fixedTime = 1.0f)
+    {
+        if (IsShaking)
+            yield return null;
+
+        IsShaking = true;
+
         float time = 0.0f;
         Vector3 childPosition = myCamera.transform.localPosition;
         do
@@ -64,6 +98,7 @@ public class CameraController : MonoBehaviour
         } while (time < fixedTime);
 
         myCamera.transform.localPosition = childPosition;
+        IsShaking = false;
         yield return null;
     }
 }
