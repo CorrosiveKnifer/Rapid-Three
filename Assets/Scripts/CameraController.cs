@@ -17,7 +17,7 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Second Instance of GameManager was created, this instance was destroyed.");
+            Debug.LogError("Second Instance of CameraController was created, this instance was destroyed.");
             Destroy(this);
         }
     }
@@ -39,6 +39,10 @@ public class CameraController : MonoBehaviour
     public float physicalMotionLerp = 0.05f;
     public float sizeMotionLerp = 0.05f;
 
+    [Header("Shake Settings")]
+    public float minAngle = -3.0f;
+    public float maxAngle = 3.0f;
+
     private Camera myCamera;
     private bool IsShaking = false;
     // Start is called before the first frame update
@@ -49,10 +53,7 @@ public class CameraController : MonoBehaviour
 
         myCamera = GetComponentInChildren<Camera>();
     }
-    private void Update()
-    {
-        
-    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -85,19 +86,30 @@ public class CameraController : MonoBehaviour
         IsShaking = true;
 
         float time = 0.0f;
+        float initialMagnitude = magintude;
         Vector3 childPosition = myCamera.transform.localPosition;
+        Vector3 shake = Vector3.zero;
+        Vector3 shakeEuler = Vector3.zero;
         do
         {
+            float magRatio = magintude / initialMagnitude;
+
             //Apply shake
-            Vector3 shake = new Vector3(Random.Range(-255, 256), Random.Range(-255, 256), 0.0f).normalized;
+            shake += new Vector3(Random.Range(-255, 256), Random.Range(-255, 256), 0.0f).normalized;
+            shakeEuler = new Vector3(0.0f, 0.0f, Random.Range(minAngle * magRatio, (maxAngle + 1.0f) * magRatio));
+
             myCamera.transform.localPosition = childPosition + shake * magintude;
-            magintude -= (magintude * Time.deltaTime)/fixedTime;
+            myCamera.transform.localRotation = Quaternion.Euler(shakeEuler);
+            magintude -= (magintude * Time.deltaTime) / fixedTime;
+
+            
 
             time += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         } while (time < fixedTime);
 
         myCamera.transform.localPosition = childPosition;
+        myCamera.transform.localRotation = Quaternion.identity;
         IsShaking = false;
         yield return null;
     }

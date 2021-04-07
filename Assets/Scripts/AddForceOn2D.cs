@@ -9,6 +9,10 @@ public class AddForceOn2D : MonoBehaviour
     public GameObject projectilePrefab;
     Rigidbody2D projectileRB;
 
+    [Header("Force Settings")]
+    public float maximumForce = 5.0f;
+    public float forcePerSecond = 0.5f;
+
     Vector2 playerLook;
     Vector2 direction;
     Vector2 myPosition;
@@ -82,14 +86,14 @@ public class AddForceOn2D : MonoBehaviour
                 //Magnitude = (playerLook - myPosition).magnitude;
                 direction.Normalize();
 
-
-                if (Magnitude >= 5)
+                //Magnitude = Mathf.Clamp(Magnitude + forcePerSecond * Time.deltaTime, 0, maximumForce);
+                if (Magnitude >= maximumForce)
                 {
-                    Magnitude = 5.0f;
+                    Magnitude = maximumForce;
                 }
                 else
                 {
-                    Magnitude += 0.01f;
+                    Magnitude += forcePerSecond * Time.deltaTime;
                 }
 
                 //Debug.Log("Pressed left click.");
