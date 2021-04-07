@@ -61,11 +61,11 @@ public class AddForceOn2D : MonoBehaviour
                 float x = Input.GetAxis("HorizontalAim");
                 float y = Input.GetAxis("VerticalAim");
 
-                if (x != 0 || y != 0)
+                if (Input.GetKey("joystick button 8"))
                 {
                     direction = new Vector2(x, y);
                 }
-                else
+                else if (Input.GetMouseButton(0))
                 {
                     screenPoint = Input.mousePosition;
                     screenPoint.z = 10.0f; //distance of the plane from the camera
