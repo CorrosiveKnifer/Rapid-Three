@@ -20,6 +20,8 @@ public class AddForceOn2D : MonoBehaviour
     float Magnitude = 1.0f;
     Vector3 worldPosition;
     Vector3 screenPoint;
+
+    float RayMadgnitude = 0.0f;
     public PlayerController playercontro;
 
     // Start is called before the first frame update
@@ -38,7 +40,7 @@ public class AddForceOn2D : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
         /*
         Vector3 mousePos = Input.mousePosition;
         //mousePos.z = Camera.main.nearClipPlane;
@@ -46,8 +48,8 @@ public class AddForceOn2D : MonoBehaviour
         worldPosition.z = 0.0f;
         transform.position = worldPosition;
         */
-        
-        Debug.DrawRay(myPosition, direction* Magnitude);
+        RayMadgnitude = Magnitude / maximumForce;
+        Debug.DrawRay(myPosition, direction* (4.5f* RayMadgnitude));
         //direction.Normalize();
         //Debug.Log(direction.magnitude);
 
