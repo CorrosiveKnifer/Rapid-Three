@@ -20,11 +20,11 @@ TagManager:
   - UI
   - 
   - 
-  - Enemy
-  - Selectable
-  - AirCameraOnly
   - 
   - 
+  - 
+  - Boulder
+  - Player
   - 
   - 
   - 
