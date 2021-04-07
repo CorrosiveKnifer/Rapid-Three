@@ -55,7 +55,7 @@ public class AddForceOn2D : MonoBehaviour
 
             direction = playerLook - myPosition;
             //Magnitude = (playerLook - myPosition).magnitude;
-
+            Magnitude = 1.0f;
             direction.Normalize();
 
 
