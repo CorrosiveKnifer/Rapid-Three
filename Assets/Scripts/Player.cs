@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         float move = Input.GetAxis("Horizontal");
+
         bool jump = Input.GetButtonDown("Jump");
 
         playerController.Move(move, jump);

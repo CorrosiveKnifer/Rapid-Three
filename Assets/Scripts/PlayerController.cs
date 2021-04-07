@@ -38,6 +38,8 @@ public class PlayerController : MonoBehaviour
                 m_bGrounded = true;
                 if (!wasGrounded && m_Rigidbody.velocity.y < 0)
                 {
+                    //float shakeAmount = m_Rigidbody.velocity.y / 10.0f;
+                    CameraController.instance.StartShake(0.3f, 0.3f);
                     Debug.Log("Bonk!");
                     // Screen Shake!
                 }
