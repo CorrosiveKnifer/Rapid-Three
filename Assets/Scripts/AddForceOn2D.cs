@@ -16,6 +16,7 @@ public class AddForceOn2D : MonoBehaviour
     float Magnitude = 1.0f;
     Vector3 worldPosition;
     Vector3 screenPoint;
+    public PlayerController playercontro;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +25,7 @@ public class AddForceOn2D : MonoBehaviour
     }
     void AddForceUp()
     {
+        playercontro.ReleaseBoulder();
         Vector2 Force = direction * Magnitude;
         projectileRB.AddForce(Force, ForceMode2D.Impulse);
 
@@ -43,42 +45,61 @@ public class AddForceOn2D : MonoBehaviour
         
         Debug.DrawRay(myPosition, direction* Magnitude);
         //direction.Normalize();
-        Debug.Log(direction.magnitude);
-        if (Input.GetMouseButtonDown(0))
+        //Debug.Log(direction.magnitude);
+
+        if (playercontro.m_bIsLifting)
         {
-            //mousePos = Input.mousePosition;
-            //AddForceUp();
-            screenPoint = Input.mousePosition;
-            screenPoint.z = 10.0f; //distance of the plane from the camera
-            playerLook = Camera.main.ScreenToWorldPoint(screenPoint);
-            myPosition = new Vector2(transform.position.x, transform.position.y);
-
-            direction = playerLook - myPosition;
-            //Magnitude = (playerLook - myPosition).magnitude;
-            Magnitude = 1.0f;
-            direction.Normalize();
-
-
-        }
-        if (Input.GetMouseButton(0))
-        {
-            
-            if(Magnitude>=5)
+            if (Input.GetButtonDown("Fire1"))
             {
-                Magnitude = 5.0f;
-            }
-            else
-            {
-                Magnitude += 0.01f;
-            }
-            
-            //Debug.Log("Pressed left click.");
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-            //mousePos = Input.mousePosition;
-            AddForceUp();
 
+                Magnitude = 1.0f;
+
+
+            }
+            if (Input.GetButton("Fire1"))
+            {
+                float x = Input.GetAxis("HorizontalAim");
+                float y = Input.GetAxis("VerticalAim");
+
+                if (x != 0 || y != 0)
+                {
+                    direction = new Vector2(x, y);
+                }
+                else
+                {
+                    screenPoint = Input.mousePosition;
+                    screenPoint.z = 10.0f; //distance of the plane from the camera
+                    playerLook = Camera.main.ScreenToWorldPoint(screenPoint);
+                    myPosition = new Vector2(transform.position.x, transform.position.y);
+                    direction = playerLook - myPosition;
+                }
+
+                Debug.Log(direction);
+
+                //mousePos = Input.mousePosition;
+                //AddForceUp();
+
+                //Magnitude = (playerLook - myPosition).magnitude;
+                direction.Normalize();
+
+
+                if (Magnitude >= 5)
+                {
+                    Magnitude = 5.0f;
+                }
+                else
+                {
+                    Magnitude += 0.01f;
+                }
+
+                //Debug.Log("Pressed left click.");
+            }
+            if (Input.GetButtonUp("Fire1"))
+            {
+                //mousePos = Input.mousePosition;
+                AddForceUp();
+
+            }
         }
 
     }
