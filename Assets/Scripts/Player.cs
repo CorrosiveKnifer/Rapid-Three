@@ -16,9 +16,10 @@ public class Player : MonoBehaviour
     void Update()
     {
         float move = Input.GetAxis("Horizontal");
-
         bool jump = Input.GetButtonDown("Jump");
+        bool lifting = Input.GetButtonDown("Fire3");
 
         playerController.Move(move, jump);
+        playerController.Lift(lifting);
     }
 }
