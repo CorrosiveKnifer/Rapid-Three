@@ -7,8 +7,11 @@ using UnityEngine;
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
+    [Header("Attached")]
+    public GameObject playerSprite;
+
     [Header("Movement Values")]
-    public float m_fJumpForce = 800.0f;
+    public float m_fJumpForce = 12.0f;
     public float m_fRunSpeed = 10.0f;
     public float m_fAirSpeed = 5.0f;
     public float m_fCarrySpeed = 1.0f;
@@ -29,6 +32,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D m_Rigidbody;
     private bool m_FacingRight = true;
     private Vector3 m_Velocity = Vector3.zero;
+    private float m_eulerZVelocity = 0.0f;
+    private float m_fRotMovementSmooth = 0.1f;
 
 
     private void Awake()
@@ -48,13 +53,17 @@ public class PlayerController : MonoBehaviour
     {
         bool wasGrounded = m_bGrounded;
         m_bGrounded = false;
+
+        Quaternion newRotation = Quaternion.identity;
+
         // Ground check
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, 0.1f, m_GroundMask);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, 0.2f, m_GroundMask);
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].gameObject != gameObject) // If found ground near ground check
             {
                 m_bGrounded = true; // Set grounded to true.
+                newRotation = colliders[i].gameObject.transform.rotation;
                 if (!wasGrounded && m_Rigidbody.velocity.y < 0)
                 {
                     //float shakeAmount = m_Rigidbody.velocity.y / 10.0f;
@@ -62,6 +71,28 @@ public class PlayerController : MonoBehaviour
                 }
                 break;
             }
+        }
+
+        RaycastHit[] hits = Physics.RaycastAll(transform.position, transform.TransformDirection(Vector3.forward), Mathf.Infinity, m_GroundMask);
+
+
+
+        // If more than 0 hits
+        RaycastHit hit = hits[0];
+        for (int i = 1; i < hits.Length; i++)
+        {
+            // get shortest distance
+            hits[i].distance;
+        }
+
+        // get hit point 
+
+        float delta = Quaternion.Angle(transform.rotation, newRotation);
+        if (delta > 0f)
+        {
+            float t = Mathf.SmoothDampAngle(delta, 0.0f, ref m_eulerZVelocity, m_fRotMovementSmooth);
+            t = 1.0f - (t / delta);
+            transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, t);
         }
     }
 
@@ -76,7 +107,8 @@ public class PlayerController : MonoBehaviour
             if (_jump && !m_bIsLifting) // Check for jump input and if lifting boulder.
             {
                 m_bGrounded = false; // Apply jump.
-                m_Rigidbody.AddForce(new Vector2(0.0f, m_fJumpForce));
+                m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, 0.0f);
+                m_Rigidbody.AddForce(new Vector2(0.0f, m_fJumpForce), ForceMode2D.Impulse);
             }
         }
         if (m_bIsLifting) // Check if lifting.
