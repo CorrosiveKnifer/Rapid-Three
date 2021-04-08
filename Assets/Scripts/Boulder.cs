@@ -59,6 +59,7 @@ public class Boulder : MonoBehaviour
                     {
                         x = 1;
                     }
+                    myPosition = new Vector2(transform.position.x, transform.position.y);
                     direction = new Vector2(x, y);
                 }
 
@@ -72,9 +73,7 @@ public class Boulder : MonoBehaviour
             }
             if (Input.GetButtonUp("Fire1"))
             {
-
                 ApplyForce();
-
             }
         }
 
