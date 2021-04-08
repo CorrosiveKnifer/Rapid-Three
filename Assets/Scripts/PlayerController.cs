@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
 
             // Get angle from hit normal.
             Vector2 normal = hit.normal;
-            float z = -(180 + Vector2.Angle(normal, transform.TransformDirection(Vector2.down)));
+            float z = -Vector2.SignedAngle(normal, transform.TransformDirection(Vector2.up));
             newRotation = Quaternion.Euler(0.0f, 0.0f, z);
         }
 
