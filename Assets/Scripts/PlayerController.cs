@@ -17,9 +17,9 @@ public class PlayerController : MonoBehaviour
     [Header("Movement Values")]
     public float m_fJumpForce = 12.0f;
     public float m_fRunSpeed = 10.0f;
-    public float m_fAirSpeed = 5.0f;
+    public float m_fAirSpeed = 10.0f;
     public float m_fCarrySpeed = 1.0f;
-    private float m_fMovementSmooth = 0.1f;
+    private float m_fMovementSmooth = 0.3f;
 
     [Header("Ground")]
     public LayerMask m_GroundMask;
@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
     public bool m_bGrounded;
 
     [Header("Boulder")]
-    public float m_fLiftRadius = 5.0f;
+    public float m_fLiftRadius = 1.5f;
     public float m_fLifeTetherRadius = 20.0f;
     public GameObject m_Boulder;
     public Transform m_BoulderAnchor;
@@ -116,8 +116,9 @@ public class PlayerController : MonoBehaviour
         if (m_bGrounded)
         {
             speed = m_fRunSpeed; // If the player is grounded change speed to normal
-            if (_jump && !m_bIsLifting) // Check for jump input and if lifting boulder.
+            if (_jump) // Check for jump input and if lifting boulder.
             {
+                m_bIsLifting = false;
                 m_bGrounded = false; // Apply jump.
                 m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, 0.0f);
                 m_Rigidbody.AddForce(new Vector2(0.0f, m_fJumpForce), ForceMode2D.Impulse);
@@ -186,7 +187,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!m_bIsLifting) // Check if currently lifting.
             {
-                if (inRange) 
+                if (inRange && m_bGrounded) 
                 {
                     m_bIsLifting = true; // Lift boulder.
                 }
