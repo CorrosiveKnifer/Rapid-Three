@@ -41,14 +41,7 @@ public class Boulder : MonoBehaviour
             }
             if (Input.GetButton("Fire1"))
             {
-                float x = Input.GetAxis("HorizontalAim");
-                float y = Input.GetAxis("VerticalAim");
-
-                if (Input.GetKey("joystick button 8"))
-                {
-                    direction = new Vector2(x, y);
-                }
-                else if (Input.GetMouseButton(0))
+                if (Input.GetMouseButton(0))
                 {
                     //using mouse mechanic
                     screenPoint = Input.mousePosition;
@@ -57,6 +50,16 @@ public class Boulder : MonoBehaviour
 
                     myPosition = new Vector2(transform.position.x, transform.position.y);
                     direction = GetVectorOfThrow();
+                }
+                else
+                {
+                    float x = Input.GetAxis("HorizontalAim");
+                    float y = Input.GetAxis("VerticalAim");
+                    if (x == 0 && y == 0)
+                    {
+                        x = 1;
+                    }
+                    direction = new Vector2(x, y);
                 }
 
                 direction.Normalize();
