@@ -64,20 +64,25 @@ public class AddForceOn2D : MonoBehaviour
             }
             if (Input.GetButton("Fire1"))
             {
-                float x = Input.GetAxis("HorizontalAim");
-                float y = Input.GetAxis("VerticalAim");
 
-                if (Input.GetKey("joystick button 8"))
-                {
-                    direction = new Vector2(x, y);
-                }
-                else if (Input.GetMouseButton(0))
+                
+                if (Input.GetMouseButton(0))
                 {
                     screenPoint = Input.mousePosition;
                     screenPoint.z = 10.0f; //distance of the plane from the camera
                     playerLook = Camera.main.ScreenToWorldPoint(screenPoint);
                     myPosition = new Vector2(transform.position.x, transform.position.y);
                     direction = playerLook - myPosition;
+                }
+                else
+                {
+                    float x = Input.GetAxis("HorizontalAim");
+                    float y = Input.GetAxis("VerticalAim");
+                    if (x == 0 && y == 0)
+                    {
+                        x = 1;
+                    }
+                    direction = new Vector2(x, y);
                 }
 
                 Debug.Log(direction);
