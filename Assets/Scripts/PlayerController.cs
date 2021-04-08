@@ -7,8 +7,15 @@ using UnityEngine;
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
+    [Header("TEMP SPRITES")]
+    public Sprite m_NoCarry;
+    public Sprite m_Carry;
+
+    [Header("Attached")]
+    public GameObject playerSprite;
+
     [Header("Movement Values")]
-    public float m_fJumpForce = 800.0f;
+    public float m_fJumpForce = 12.0f;
     public float m_fRunSpeed = 10.0f;
     public float m_fAirSpeed = 5.0f;
     public float m_fCarrySpeed = 1.0f;
@@ -27,8 +34,11 @@ public class PlayerController : MonoBehaviour
     public bool m_bIsLifting = false;
 
     private Rigidbody2D m_Rigidbody;
-    private bool m_FacingRight = true;
+
+    private bool m_FacingRight = false;
     private Vector3 m_Velocity = Vector3.zero;
+    private float m_eulerZVelocity = 0.0f;
+    private float m_fRotMovementSmooth = 0.1f;
 
 
     private void Awake()
@@ -48,20 +58,53 @@ public class PlayerController : MonoBehaviour
     {
         bool wasGrounded = m_bGrounded;
         m_bGrounded = false;
+
+        Quaternion newRotation = Quaternion.identity;
         // Ground check
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, 0.1f, m_GroundMask);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, 0.2f, m_GroundMask);
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].gameObject != gameObject) // If found ground near ground check
             {
                 m_bGrounded = true; // Set grounded to true.
+                //newRotation = colliders[i].gameObject.transform.rotation;
                 if (!wasGrounded && m_Rigidbody.velocity.y < 0)
                 {
                     //float shakeAmount = m_Rigidbody.velocity.y / 10.0f;
-                    CameraController.instance.StartShake(0.3f, 0.3f);
+                    //CameraController.instance.StartShake(0.3f, 0.3f);
                 }
                 break;
             }
+        }
+
+        RaycastHit2D[] hits = Physics2D.RaycastAll(m_GroundCheck.position, transform.TransformDirection(Vector3.down), 0.1f, m_GroundMask);
+
+        // If more than 0 hits
+        if (hits.Length > 0)
+        {
+            RaycastHit2D hit = hits[0];
+            for (int i = 1; i < hits.Length; i++)
+            {
+                // get shortest distance
+                if (hits[i].distance < hit.distance)
+                {
+                    hit = hits[i];
+                }
+            }
+
+            // Get angle from hit normal.
+            Vector2 normal = hit.normal;
+            float z = -(180 + Vector2.Angle(normal, transform.TransformDirection(Vector2.down)));
+            newRotation = Quaternion.Euler(0.0f, 0.0f, z);
+        }
+
+        // Smoothly move to target rotation.
+        float delta = Quaternion.Angle(playerSprite.transform.rotation, newRotation);
+        if (delta > 0f)
+        {
+            float t = Mathf.SmoothDampAngle(delta, 0.0f, ref m_eulerZVelocity, m_fRotMovementSmooth);
+            t = 1.0f - (t / delta);
+            playerSprite.transform.rotation = Quaternion.Slerp(playerSprite.transform.rotation, newRotation, t);
         }
     }
 
@@ -76,8 +119,14 @@ public class PlayerController : MonoBehaviour
             if (_jump && !m_bIsLifting) // Check for jump input and if lifting boulder.
             {
                 m_bGrounded = false; // Apply jump.
-                m_Rigidbody.AddForce(new Vector2(0.0f, m_fJumpForce));
+                m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, 0.0f);
+                m_Rigidbody.AddForce(new Vector2(0.0f, m_fJumpForce), ForceMode2D.Impulse);
             }
+            if (_move == 0)
+            {
+                m_Rigidbody.velocity = new Vector2(0, m_Rigidbody.velocity.y);
+            }
+
         }
         if (m_bIsLifting) // Check if lifting.
         {
@@ -113,6 +162,15 @@ public class PlayerController : MonoBehaviour
 
     public void Lift(bool _lifting)
     {
+        if (m_bIsLifting) // Temp switch sprites
+        {
+            playerSprite.GetComponentInChildren<SpriteRenderer>().sprite = m_Carry;
+        }
+        else
+        {
+            playerSprite.GetComponentInChildren<SpriteRenderer>().sprite = m_NoCarry;
+        }
+
         if (m_Boulder == null) // Check if boulder exists in world.
         {
             Debug.Log("Boulder does not exist!");
@@ -156,6 +214,9 @@ public class PlayerController : MonoBehaviour
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+
+        playerSprite.transform.rotation = Quaternion.Euler(0.0f, 0.0f, -playerSprite.transform.rotation.z);
+
     }
 
     public void ReleaseBoulder()
