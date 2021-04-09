@@ -66,32 +66,32 @@ public class Boulder : MonoBehaviour
             if (Input.GetButton("Fire1"))
             {
                 
-                float x = Input.GetAxis("HorizontalAim");
-                float y = Input.GetAxis("VerticalAim");
-                //GetRayDrawDirection(x*4.5f, y*4.5f);
-                if(x != 0 || y != 0)
-                {
-                    Debug.Log("move the x");
-                    Debug.Log(x);
-                    Debug.Log("move the y");
-                    Debug.Log(y);
-                }
-                if (Input.GetKey("joystick button 8"))
-                {
-                    direction = new Vector2(x, y);
-                    
-                }
-                else if (Input.GetMouseButton(0))
+                if (Input.GetMouseButton(0))
                 {
                     //using mouse mechanic
                     screenPoint = Input.mousePosition;
                     screenPoint.z = 10.0f; //distance of the plane from the camera
                     playerLook = Camera.main.ScreenToWorldPoint(screenPoint);
-                    
+
                     myPosition = GetPlayerPositon();
                     direction = GetVectorOfThrow();
-                    
                 }
+                else
+                {
+                    float x = Input.GetAxis("HorizontalAim");
+                    float y = Input.GetAxis("VerticalAim");
+                    if (x == 0 && y == 0)
+                    {
+                        x = 1;
+                    }
+
+                    myPosition = GetPlayerPositon();
+                    direction = new Vector2(x, y);
+                    Debug.Log(direction);
+                    GetRayDrawDirection(x, y);
+                }
+
+
 
                 direction.Normalize();
                 //increasing the amount of force
