@@ -8,15 +8,21 @@ public class Boulder : MonoBehaviour
     public GameObject indicatorPrefab;
     Rigidbody2D projectileRB;
 
+    [Header("Ground")]
+    public LayerMask m_GroundMask;
+    public bool m_bGrounded;
+
+
     [Header("Force Settings")]
     public float maximumForce = 5.0f;
     public float forcePerSecond = 0.5f;
+    public float maximumShakeDistance = 20.0f;
 
     Vector2 playerLook;
     Vector2 direction;
     Vector2 myPosition;
 
-    float Magnitude = 0.0f;
+    public float Magnitude = 0.0f;
     Vector3 screenPoint;
 
     public LayerMask m_PlayerMask;
@@ -51,7 +57,8 @@ public class Boulder : MonoBehaviour
         screenPoint.z = 10.0f; //distance of the plane from the camera
         playerLook = Camera.main.ScreenToWorldPoint(screenPoint);
 
-        
+        GroundedUpdate();
+
         GetRayDrawWhenAim();
         if (playercontro.m_bIsLifting)
         {
@@ -107,9 +114,53 @@ public class Boulder : MonoBehaviour
 
             }
         }
+        else
+        {
+            Magnitude = 0.0f;
+        }
 
     }
     
+    void GroundedUpdate()
+    {
+        bool wasGrounded = m_bGrounded;
+        m_bGrounded = false;
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 0.8f, m_GroundMask);
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            if (colliders[i].gameObject != gameObject) // If found ground near ground check
+            {
+                m_bGrounded = true; // Set grounded to true.
+                if (!wasGrounded && projectileRB.velocity.y < 0)
+                {
+                    float distanceFromPlayer = Mathf.Clamp(1.0f - (Vector2.Distance(playercontro.playerSprite.transform.position, transform.position) / maximumShakeDistance), 0.01f, 1.0f);
+
+                    float fCamShake = (Mathf.Abs(projectileRB.velocity.y) / 1000) * distanceFromPlayer;
+                    CameraController.instance.StartShake(fCamShake, 1.0f);
+                }
+                break;
+            }
+        }
+
+        if (m_bGrounded)
+        {
+            projectileRB.drag = 1.0f;
+        }
+        else
+        {
+            projectileRB.drag = 0.0f;
+        }
+
+        if (projectileRB.velocity.y < 0)
+        {
+            projectileRB.gravityScale = 1.5f;
+        }
+        else
+        {
+            projectileRB.gravityScale = 1.0f;
+        }
+
+    }
     void ApplyForce()
     {
         playercontro.ReleaseBoulder();

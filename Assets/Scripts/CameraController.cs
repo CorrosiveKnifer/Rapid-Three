@@ -80,7 +80,7 @@ public class CameraController : MonoBehaviour
 
     private IEnumerator Shake(float magintude, float fixedTime = 1.0f)
     {
-        if (IsShaking)
+        if (IsShaking || magintude <= 0.0f)
             yield return null;
 
         IsShaking = true;
@@ -101,8 +101,6 @@ public class CameraController : MonoBehaviour
             myCamera.transform.localPosition = childPosition + shake * magintude;
             myCamera.transform.localRotation = Quaternion.Euler(shakeEuler);
             magintude -= (magintude * Time.deltaTime) / fixedTime;
-
-            
 
             time += Time.deltaTime;
             yield return new WaitForEndOfFrame();
