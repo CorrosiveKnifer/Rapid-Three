@@ -26,9 +26,14 @@ public class PlayerController : MonoBehaviour
     public Transform m_GroundCheck;
     public bool m_bGrounded;
 
+    [Header("Life Timer")]
+    public float m_fLife = 100.0f;
+    public float m_fLifeTetherRadius = 10.0f;
+    public float m_fRegenRate = 1.0f;
+    public float m_fDecayRate = 1.0f;
+
     [Header("Boulder")]
     public float m_fLiftRadius = 1.5f;
-    public float m_fLifeTetherRadius = 20.0f;
     public GameObject m_Boulder;
     public Transform m_BoulderAnchor;
     public bool m_bIsLifting = false;
@@ -183,6 +188,16 @@ public class PlayerController : MonoBehaviour
         {
             inRange = true;
         }
+        if (m_fLifeTetherRadius < Vector3.Distance(transform.position, m_Boulder.transform.position))
+        {
+            // Drain timer
+            LifeTimer(-m_fDecayRate);
+        }
+        else
+        {
+            // Regen timer
+            LifeTimer(m_fRegenRate);
+        }
         if (_lifting) // Check if button is being pressed.
         {
             if (!m_bIsLifting) // Check if currently lifting.
@@ -208,6 +223,21 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+
+    private void LifeTimer(float _changeModifier)
+    {
+        m_fLife += _changeModifier * Time.deltaTime;
+        Debug.Log(m_fLife);
+        if (m_fLife > 100.0f)
+        {
+            m_fLife = 100.0f;
+        }
+        else if (m_fLife < 0.0f)
+        {
+            m_fLife = 0.0f;
+        }
+    }
+
     private void Flip()
     {
         m_FacingRight = !m_FacingRight;
