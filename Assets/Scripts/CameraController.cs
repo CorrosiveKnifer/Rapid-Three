@@ -94,7 +94,12 @@ public class CameraController : MonoBehaviour
                 float magRatio = magintude / initialMagnitude;
 
                 //Apply shake
-                shake += new Vector3(Random.Range(-255, 256), Random.Range(-255, 256), 0.0f).normalized;
+                do
+                {
+                    shake += new Vector3(Random.Range(-255, 256), Random.Range(-255, 256), 0.0f);
+                } while (shake == new Vector3(0, 0, 0));
+                shake = shake.normalized;
+
                 shakeEuler = new Vector3(0.0f, 0.0f, Random.Range(minAngle * magRatio, (maxAngle + 1.0f) * magRatio));
 
                 myCamera.transform.localPosition = childPosition + shake * magintude;
@@ -108,7 +113,7 @@ public class CameraController : MonoBehaviour
             myCamera.transform.localPosition = childPosition;
             myCamera.transform.localRotation = Quaternion.identity;
             IsShaking = false;
+            yield return null;
         }
-        yield return null;
     }
 }

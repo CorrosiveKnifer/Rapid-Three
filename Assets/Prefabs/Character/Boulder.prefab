@@ -86,8 +86,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 1857313155753138945}
   indicatorPrefab: {fileID: 1857313156822784579}
+  m_GroundMask:
+    serializedVersion: 2
+    m_Bits: 2147483648
+  m_bGrounded: 0
   maximumForce: 7.5
   forcePerSecond: 2.5
+  maximumShakeDistance: 10
+  Magnitude: 0
   m_PlayerMask:
     serializedVersion: 2
     m_Bits: 4096
