@@ -227,7 +227,7 @@ public class PlayerController : MonoBehaviour
     private void LifeTimer(float _changeModifier)
     {
         m_fLife += _changeModifier * Time.deltaTime;
-        Debug.Log(m_fLife);
+        //Debug.Log(m_fLife);
         if (m_fLife > 100.0f)
         {
             m_fLife = 100.0f;
