@@ -5,6 +5,7 @@ using UnityEngine;
 public class Boulder : MonoBehaviour
 {
     public GameObject projectilePrefab;
+    public GameObject indicatorPrefab;
     Rigidbody2D projectileRB;
 
     [Header("Force Settings")]
@@ -18,20 +19,43 @@ public class Boulder : MonoBehaviour
     float Magnitude = 0.0f;
     Vector3 screenPoint;
 
+    public LayerMask m_PlayerMask;
+    public float radius = 0.0f;
+
     public PlayerController playercontro;
 
     // Start is called before the first frame update
     void Start()
     {
         projectileRB = projectilePrefab.GetComponent<Rigidbody2D>();
+        indicatorPrefab.transform.localScale *= radius;
+        indicatorPrefab.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        GetRayDraw();
+        
+        bool boulderRadius = Physics2D.OverlapCircle(transform.position, radius, m_PlayerMask);
+        if (boulderRadius == true)
+        {
+            indicatorPrefab.SetActive(true);
+        }
+        if (boulderRadius == false)
+        {
+            indicatorPrefab.SetActive(false);
+        }
+
+        //using mouse mechanic
+        screenPoint = Input.mousePosition;
+        screenPoint.z = 10.0f; //distance of the plane from the camera
+        playerLook = Camera.main.ScreenToWorldPoint(screenPoint);
+
+        
+        GetRayDrawWhenAim();
         if (playercontro.m_bIsLifting)
         {
+            Debug.DrawRay(GetPlayerPositon(), (playerLook - GetPlayerPositon()), Color.green);
             if (Input.GetButtonDown("Fire1"))
             {
 
@@ -41,12 +65,21 @@ public class Boulder : MonoBehaviour
             }
             if (Input.GetButton("Fire1"))
             {
+                
                 float x = Input.GetAxis("HorizontalAim");
                 float y = Input.GetAxis("VerticalAim");
-
+                //GetRayDrawDirection(x*4.5f, y*4.5f);
+                if(x != 0 || y != 0)
+                {
+                    Debug.Log("move the x");
+                    Debug.Log(x);
+                    Debug.Log("move the y");
+                    Debug.Log(y);
+                }
                 if (Input.GetKey("joystick button 8"))
                 {
                     direction = new Vector2(x, y);
+                    
                 }
                 else if (Input.GetMouseButton(0))
                 {
@@ -54,13 +87,13 @@ public class Boulder : MonoBehaviour
                     screenPoint = Input.mousePosition;
                     screenPoint.z = 10.0f; //distance of the plane from the camera
                     playerLook = Camera.main.ScreenToWorldPoint(screenPoint);
-
-                    myPosition = new Vector2(transform.position.x, transform.position.y);
+                    
+                    myPosition = GetPlayerPositon();
                     direction = GetVectorOfThrow();
+                    
                 }
 
                 direction.Normalize();
-
                 //increasing the amount of force
                 Magnitude = Mathf.Clamp(Magnitude + (forcePerSecond * Time.deltaTime), 0, maximumForce);
                 
@@ -76,7 +109,7 @@ public class Boulder : MonoBehaviour
         }
 
     }
-
+    
     void ApplyForce()
     {
         playercontro.ReleaseBoulder();
@@ -84,10 +117,24 @@ public class Boulder : MonoBehaviour
         projectileRB.AddForce(Force, ForceMode2D.Impulse);
 
     }
-    void GetRayDraw()
+    void GetRayDrawWhenAim()
     {
         float RayMadgnitude = Magnitude / maximumForce;
         Debug.DrawRay(myPosition, direction * (4.5f * RayMadgnitude));
+    }
+    void GetRayDrawDirection(float x, float y)
+    {
+        Vector2 pointer = new Vector2(x, y);
+        Vector2 myPosition = new Vector2(transform.position.x, transform.position.y);
+
+
+        Vector2 direction = pointer - myPosition;
+        Debug.DrawRay(myPosition, direction, Color.red);
+    }
+    public Vector2 GetPlayerPositon()
+    {
+        Vector2 position = new Vector2(transform.position.x, transform.position.y);
+        return position;
     }
     public Vector2 GetVectorOfThrow()
     {
