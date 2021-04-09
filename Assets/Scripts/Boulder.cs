@@ -39,11 +39,11 @@ public class Boulder : MonoBehaviour
         bool boulderRadius = Physics2D.OverlapCircle(transform.position, radius, m_PlayerMask);
         if (boulderRadius == true)
         {
-            indicatorPrefab.SetActive(true);
+            indicatorPrefab.SetActive(false);
         }
         if (boulderRadius == false)
         {
-            indicatorPrefab.SetActive(false);
+            indicatorPrefab.SetActive(true);
         }
 
         //using mouse mechanic
