@@ -38,6 +38,11 @@ public class Boulder : MonoBehaviour
         indicatorPrefab.SetActive(false);
     }
 
+    private void FixedUpdate()
+    {
+        GroundedUpdate();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -57,7 +62,6 @@ public class Boulder : MonoBehaviour
         screenPoint.z = 10.0f; //distance of the plane from the camera
         playerLook = Camera.main.ScreenToWorldPoint(screenPoint);
 
-        GroundedUpdate();
 
         GetRayDrawWhenAim();
         if (playercontro.m_bIsLifting)
@@ -133,10 +137,10 @@ public class Boulder : MonoBehaviour
                 m_bGrounded = true; // Set grounded to true.
                 if (!wasGrounded && projectileRB.velocity.y < 0)
                 {
-                    float distanceFromPlayer = Mathf.Clamp(1.0f - (Vector2.Distance(playercontro.playerSprite.transform.position, transform.position) / maximumShakeDistance), 0.01f, 1.0f);
-
-                    float fCamShake = (Mathf.Abs(projectileRB.velocity.y) / 1000) * distanceFromPlayer;
-                    CameraController.instance.StartShake(fCamShake, 1.0f);
+                    float distanceFromPlayer = Mathf.Clamp(1.0f - (Vector2.Distance(playercontro.playerSprite.transform.position, transform.position) / maximumShakeDistance), 0.0f, 1.0f);
+                    float fCamShake = (Mathf.Abs(projectileRB.velocity.y) / 30) * distanceFromPlayer;
+                    Debug.Log(fCamShake);
+                    CameraController.instance.StartShake(fCamShake, fCamShake);
                 }
                 break;
             }
