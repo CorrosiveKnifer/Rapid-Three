@@ -35,7 +35,7 @@ public class Boulder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //Making the indicator appear and dissapear
         bool boulderRadius = Physics2D.OverlapCircle(transform.position, radius, m_PlayerMask);
         if (boulderRadius == true)
         {
