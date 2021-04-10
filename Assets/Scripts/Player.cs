@@ -24,4 +24,8 @@ public class Player : MonoBehaviour
         playerController.Move(move, jump);
         playerController.Lift(lifting);
     }
+
+    private void FixedUpdate()
+    {
+    }
 }

@@ -92,7 +92,7 @@ MonoBehaviour:
   m_bGrounded: 0
   maximumForce: 7.5
   forcePerSecond: 2.5
-  maximumShakeDistance: 10
+  maximumShakeDistance: 20
   Magnitude: 0
   m_PlayerMask:
     serializedVersion: 2
