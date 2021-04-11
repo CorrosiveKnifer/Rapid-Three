@@ -9,6 +9,7 @@ public class BouncePlatformScript : PlatformScript
 
     protected override void ApplyEffectToRigidBody2D(Rigidbody2D body)
     {
-            body.AddForce(transform.up * BounceMagnitude);
+        if(body.velocity.y <= 0)
+            body.AddForce(transform.up * (-1 * body.mass * body.velocity.y), ForceMode2D.Impulse);
     }
 }

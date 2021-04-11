@@ -80,37 +80,40 @@ public class CameraController : MonoBehaviour
 
     private IEnumerator Shake(float magintude, float fixedTime = 1.0f)
     {
-        if (IsShaking)
-            yield return null;
-
-        IsShaking = true;
-
-        float time = 0.0f;
-        float initialMagnitude = magintude;
-        Vector3 childPosition = myCamera.transform.localPosition;
-        Vector3 shake = Vector3.zero;
-        Vector3 shakeEuler = Vector3.zero;
-        do
+        if (!IsShaking && magintude > 0.0f)
         {
-            float magRatio = magintude / initialMagnitude;
+            IsShaking = true;
 
-            //Apply shake
-            shake += new Vector3(Random.Range(-255, 256), Random.Range(-255, 256), 0.0f).normalized;
-            shakeEuler = new Vector3(0.0f, 0.0f, Random.Range(minAngle * magRatio, (maxAngle + 1.0f) * magRatio));
+            float time = 0.0f;
+            float initialMagnitude = magintude;
+            Vector3 childPosition = myCamera.transform.localPosition;
+            Vector3 shake = Vector3.zero;
+            Vector3 shakeEuler = Vector3.zero;
+            do
+            {
+                float magRatio = magintude / initialMagnitude;
 
-            myCamera.transform.localPosition = childPosition + shake * magintude;
-            myCamera.transform.localRotation = Quaternion.Euler(shakeEuler);
-            magintude -= (magintude * Time.deltaTime) / fixedTime;
+                //Apply shake
+                do
+                {
+                    shake += new Vector3(Random.Range(-255, 256), Random.Range(-255, 256), 0.0f);
+                } while (shake == new Vector3(0, 0, 0));
+                shake = shake.normalized;
 
-            
+                shakeEuler = new Vector3(0.0f, 0.0f, Random.Range(minAngle * magRatio, (maxAngle + 1.0f) * magRatio));
 
-            time += Time.deltaTime;
-            yield return new WaitForEndOfFrame();
-        } while (time < fixedTime);
+                myCamera.transform.localPosition = childPosition + shake * magintude;
+                myCamera.transform.localRotation = Quaternion.Euler(shakeEuler);
+                magintude -= (magintude * Time.deltaTime) / fixedTime;
 
-        myCamera.transform.localPosition = childPosition;
-        myCamera.transform.localRotation = Quaternion.identity;
-        IsShaking = false;
-        yield return null;
+                time += Time.deltaTime;
+                yield return new WaitForEndOfFrame();
+            } while (time < fixedTime);
+
+            myCamera.transform.localPosition = childPosition;
+            myCamera.transform.localRotation = Quaternion.identity;
+            IsShaking = false;
+            yield return null;
+        }
     }
 }

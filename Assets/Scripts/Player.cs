@@ -19,7 +19,13 @@ public class Player : MonoBehaviour
         bool jump = Input.GetButtonDown("Jump");
         bool lifting = Input.GetButtonDown("Fire3");
 
+        //Debug.Log(move);
+
         playerController.Move(move, jump);
         playerController.Lift(lifting);
+    }
+
+    private void FixedUpdate()
+    {
     }
 }
