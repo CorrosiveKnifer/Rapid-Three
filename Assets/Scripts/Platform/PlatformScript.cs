@@ -27,13 +27,17 @@ public abstract class PlatformScript : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
-        if(other != null)
-            bodiesWithin.Add(other.gameObject.GetComponentInChildren<Rigidbody2D>());
+        Rigidbody2D body = other?.gameObject?.GetComponentInChildren<Rigidbody2D>();
+
+        if(body != null)
+            bodiesWithin?.Add(body);
     }
 
     protected virtual void OnTriggerExit2D(Collider2D other)
     {
-        if (other != null)
-            bodiesWithin.Remove(other.gameObject.GetComponentInChildren<Rigidbody2D>());
+        Rigidbody2D body = other?.gameObject?.GetComponentInChildren<Rigidbody2D>();
+
+        if (body != null)
+            bodiesWithin?.Remove(body);
     }
 }
