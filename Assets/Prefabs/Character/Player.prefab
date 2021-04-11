@@ -151,14 +151,14 @@ MonoBehaviour:
   m_NoCarry: {fileID: 21300000, guid: 25fa260ea58e5df4aae72f845e2b0dfb, type: 3}
   m_Carry: {fileID: 21300000, guid: fa59dabd42e390548947c8e5bd7e6d89, type: 3}
   playerSprite: {fileID: 2393261084046985638}
-  m_iAirJumps: 1
+  m_iAirJumps: 0
   m_iJumpsLeft: 1
   m_fGrapplePull: 5
   m_fJumpForce: 12
   m_fRunSpeed: 10
   m_fAirSpeed: 10
   m_fCarrySpeed: 3
-  m_fJumpTimer: 0.4
+  m_fJumpTimer: 0.5
   m_fForgiveTimer: 0.2
   m_bCanJump: 1
   m_GroundMask:
@@ -169,9 +169,9 @@ MonoBehaviour:
   m_fLife: 100
   m_fLifeTetherRadius: 20
   m_bIsRegening: 0
-  m_fRegenRate: 1
-  m_fDecayRate: 1
-  m_fBoulderLerpSpeed: 1
+  m_fRegenRate: 50
+  m_fDecayRate: 30
+  m_fBoulderLerpSpeed: 20
   m_fLiftRadius: 1.5
   m_Boulder: {fileID: 0}
   m_BoulderAnchor: {fileID: 4195784027540906167}
