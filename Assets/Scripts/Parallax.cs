@@ -31,6 +31,5 @@ public class Parallax : MonoBehaviour
 
         if (tempX > startpos.x + length.x) startpos.x += length.x;
         else if (tempX < startpos.x - length.x) startpos.x -= length.x;
-
     }
 }
