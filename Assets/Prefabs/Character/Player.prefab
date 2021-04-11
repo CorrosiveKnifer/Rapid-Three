@@ -156,6 +156,9 @@ MonoBehaviour:
   m_fRunSpeed: 10
   m_fAirSpeed: 10
   m_fCarrySpeed: 3
+  m_fJumpForgiveTime: 0.2
+  m_fJumpTimer: 0.4
+  m_bCanJump: 1
   m_GroundMask:
     serializedVersion: 2
     m_Bits: 2147483648
@@ -163,6 +166,7 @@ MonoBehaviour:
   m_bGrounded: 0
   m_fLife: 100
   m_fLifeTetherRadius: 20
+  m_bIsRegening: 0
   m_fRegenRate: 1
   m_fDecayRate: 1
   m_fBoulderLerpSpeed: 1

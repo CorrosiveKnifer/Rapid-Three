@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Mobility Test")]
     public int m_iAirJumps = 1;
-    private int m_iJumpsLeft = 1;
+    public  int m_iJumpsLeft = 1;
     public float m_fGrapplePull = 5.0f;
 
     [Header("Movement Values")]
@@ -27,8 +27,11 @@ public class PlayerController : MonoBehaviour
     private float m_fMovementSmooth = 0.3f;
 
     [Header("Jump Forgiveness")]
-    public float m_fJumpForgiveTime = 0.4f;
-    public float m_fJumpTimer = 0.4f;
+    public float m_fJumpTimer = 0.3f;
+    float m_fJumpCooldown = 0.3f;
+
+    public float m_fForgiveTimer = 0.2f;
+    float m_fJumpForgiveTime = 0.2f;
     public bool m_bCanJump = true;
 
 
@@ -73,11 +76,23 @@ public class PlayerController : MonoBehaviour
 
         // Get m_fLifeTetherRadius from boulder
         m_fLifeTetherRadius = m_Boulder.GetComponent<Boulder>().radius;
+
+        // Warning
+        if (m_fForgiveTimer > m_fJumpTimer)
+        {
+            Debug.LogError("Having the jumping forgiveness cooldown greater than the jump cooldown timer will create issues with jumping.\n - William de Beer");
+        }
     }
 
     private void FixedUpdate()
     {
         bool wasGrounded = m_bGrounded;
+        m_fJumpTimer += Time.fixedDeltaTime;
+        if (m_fJumpTimer > m_fJumpCooldown)
+        {
+            m_fJumpTimer = m_fJumpCooldown;
+        }
+
         m_bCanJump = false;
         Quaternion newRotation = Quaternion.identity;
         // Ground check
@@ -87,7 +102,7 @@ public class PlayerController : MonoBehaviour
             if (colliders[i].gameObject != gameObject) // If found ground near ground check
             {
                 m_bGrounded = true; // Set grounded to true.
-                m_fJumpTimer = 0;
+                m_fForgiveTimer = 0;
                 m_iJumpsLeft = m_iAirJumps;
                 m_bCanJump = true;
 
@@ -103,9 +118,9 @@ public class PlayerController : MonoBehaviour
 
         if (m_bGrounded && colliders.Length == 0)
         {
-            m_fJumpTimer += Time.fixedDeltaTime;
+            m_fForgiveTimer += Time.fixedDeltaTime;
 
-            if (m_fJumpForgiveTime <= m_fJumpTimer)
+            if (m_fJumpForgiveTime <= m_fForgiveTimer)
             {
                 m_bGrounded = false;
             }
@@ -155,16 +170,23 @@ public class PlayerController : MonoBehaviour
             {
                 m_Rigidbody.velocity = new Vector2(0, m_Rigidbody.velocity.y);
             }
-
         }
        
-        if (_jump && ((m_iJumpsLeft > 0 && m_iAirJumps != 0) || (m_iAirJumps == 0 && m_bCanJump))) // Check for jump input and if have enough jumps left.
+        if (_jump && (m_fJumpTimer >= m_fJumpCooldown) && ((m_iJumpsLeft > 0 && m_iAirJumps != 0) || (m_iAirJumps == 0 && m_bGrounded))) // Check for jump input and if have enough jumps left.
         {
+            float jumpMultiplier = 1.0f;
+            if (!m_bGrounded)
+                jumpMultiplier = 0.8f;
+
             --m_iJumpsLeft;
+            m_fJumpTimer = 0.0f;
             m_bIsLifting = false;
+            m_fForgiveTimer = m_fJumpForgiveTime;
             m_bGrounded = false; // Apply jump.
-            m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, 0.0f);
-            m_Rigidbody.AddForce(new Vector2(0.0f, m_fJumpForce), ForceMode2D.Impulse);
+
+            
+            m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, m_fJumpForce * jumpMultiplier);
+            //m_Rigidbody.AddForce(new Vector2(0.0f, m_fJumpForce), ForceMode2D.Impulse);
         }
 
         if (m_bIsLifting) // Check if lifting.

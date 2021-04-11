@@ -6166,6 +6166,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4560407180150145119, guid: febe849aa873de9428f60205eca3c7f3,
         type: 3}
+      propertyPath: m_fJumpTimer
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560407180150145119, guid: febe849aa873de9428f60205eca3c7f3,
+        type: 3}
       propertyPath: m_fRegenRate
       value: 50
       objectReference: {fileID: 0}
@@ -6173,6 +6178,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_fLiftRadius
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560407180150145119, guid: febe849aa873de9428f60205eca3c7f3,
+        type: 3}
+      propertyPath: m_fJumpForgiveTime
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 4560407180150145119, guid: febe849aa873de9428f60205eca3c7f3,
         type: 3}
