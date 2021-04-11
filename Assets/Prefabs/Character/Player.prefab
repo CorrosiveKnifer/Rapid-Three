@@ -156,6 +156,9 @@ MonoBehaviour:
   m_fRunSpeed: 10
   m_fAirSpeed: 10
   m_fCarrySpeed: 3
+  m_fJumpForgiveTime: 0.4
+  m_fJumpTimer: 0.4
+  m_bCanJump: 1
   m_GroundMask:
     serializedVersion: 2
     m_Bits: 2147483648
@@ -163,6 +166,7 @@ MonoBehaviour:
   m_bGrounded: 0
   m_fLife: 100
   m_fLifeTetherRadius: 20
+  m_bIsRegening: 0
   m_fRegenRate: 1
   m_fDecayRate: 1
   m_fBoulderLerpSpeed: 1
@@ -237,7 +241,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7698182976499767459}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0.965, z: 0}
   m_LocalScale: {x: 0.04, y: 0.04, z: 0.04}
   m_Children: []
   m_Father: {fileID: 5595836793212313339}

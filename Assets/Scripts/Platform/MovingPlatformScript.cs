@@ -39,7 +39,10 @@ public class MovingPlatformScript : PlatformScript
 
     protected override void ApplyEffectToRigidBody2D(Rigidbody2D body)
     {
-        float forward = (IsMovingForward) ? 1 : -1;
-        body.transform.position += forward * direction *speed * Time.fixedDeltaTime;
+        if(body.gameObject.layer != LayerMask.NameToLayer("Ground"))
+        {
+            float forward = (IsMovingForward) ? 1 : -1;
+            body.transform.position += forward * direction * speed * Time.fixedDeltaTime;
+        }
     }
 }
