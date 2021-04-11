@@ -56,7 +56,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4560407179880177921}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalPosition: {x: 0, y: -1.195, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4560407180150145113}
@@ -112,8 +112,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 2}
+  m_Offset: {x: 0, y: -0.06}
+  m_Size: {x: 1, y: 2.35}
   m_Direction: 0
 --- !u!50 &4560407180150145114
 Rigidbody2D:
@@ -128,7 +128,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 0.5
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feca92bb951bb4040982aef2384badaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_NoCarry: {fileID: 21300000, guid: be74f9d5c5a9155419314fa440f0c6ce, type: 3}
+  m_NoCarry: {fileID: 21300000, guid: 25fa260ea58e5df4aae72f845e2b0dfb, type: 3}
   m_Carry: {fileID: 21300000, guid: fa59dabd42e390548947c8e5bd7e6d89, type: 3}
   playerSprite: {fileID: 2393261084046985638}
   m_iAirJumps: 1
@@ -381,7 +381,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 8
-  m_Sprite: {fileID: 21300000, guid: be74f9d5c5a9155419314fa440f0c6ce, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 25fa260ea58e5df4aae72f845e2b0dfb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
