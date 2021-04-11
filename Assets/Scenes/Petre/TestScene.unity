@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -128,6 +128,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6583812593829401753, guid: d48d972aa8d4eb54bbf397fa73242921,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 15.606899
+      objectReference: {fileID: 0}
+    - target: {fileID: -6583812593829401753, guid: d48d972aa8d4eb54bbf397fa73242921,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.18697743
+      objectReference: {fileID: 0}
     - target: {fileID: -6470512133248902087, guid: d48d972aa8d4eb54bbf397fa73242921,
         type: 3}
       propertyPath: m_RootOrder
@@ -188,6 +198,71 @@ PrefabInstance:
       propertyPath: m_Name
       value: MAIN CHARACTER
       objectReference: {fileID: 0}
+    - target: {fileID: -3973668339093754837, guid: d48d972aa8d4eb54bbf397fa73242921,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.1505354
+      objectReference: {fileID: 0}
+    - target: {fileID: -3973668339093754837, guid: d48d972aa8d4eb54bbf397fa73242921,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3973668339093754837, guid: d48d972aa8d4eb54bbf397fa73242921,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.9886046
+      objectReference: {fileID: 0}
+    - target: {fileID: -3973668339093754837, guid: d48d972aa8d4eb54bbf397fa73242921,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 162.684
+      objectReference: {fileID: 0}
+    - target: {fileID: -248681950037736880, guid: d48d972aa8d4eb54bbf397fa73242921,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.0447322
+      objectReference: {fileID: 0}
+    - target: {fileID: -248681950037736880, guid: d48d972aa8d4eb54bbf397fa73242921,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -248681950037736880, guid: d48d972aa8d4eb54bbf397fa73242921,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.998999
+      objectReference: {fileID: 0}
+    - target: {fileID: -248681950037736880, guid: d48d972aa8d4eb54bbf397fa73242921,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 174.87201
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 8956506523958977202, guid: d48d972aa8d4eb54bbf397fa73242921,
     type: 3}
+--- !u!1 &1194447896 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -4696516480569493897, guid: d48d972aa8d4eb54bbf397fa73242921,
+    type: 3}
+  m_PrefabInstance: {fileID: 1194447895}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1194447897
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1194447896}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 35018185a93b5d94bbfe7f3ad676270f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
