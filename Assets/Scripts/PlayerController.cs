@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D m_Rigidbody;
 
+    public bool m_IsMoving = false;
     private bool m_FacingRight = false;
     private Vector3 m_Velocity = Vector3.zero;
     private float m_eulerZVelocity = 0.0f;
@@ -89,7 +90,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         controller.SetBool("Grounded", m_bGrounded);
-        controller.SetBool("Walk", (m_Rigidbody.velocity.x != 0));
+        controller.SetBool("Walk", (m_IsMoving));
 
         SetDirection((m_Boulder.transform.position - transform.position).normalized);
         director.SetActive(!m_bIsRegening);
@@ -181,6 +182,11 @@ public class PlayerController : MonoBehaviour
             if (_move == 0)
             {
                 m_Rigidbody.velocity = new Vector2(0, m_Rigidbody.velocity.y);
+                m_IsMoving = false;
+            }
+            else
+            {
+                m_IsMoving = true;
             }
         }
        
@@ -240,14 +246,6 @@ public class PlayerController : MonoBehaviour
 
     public void Lift(bool _lifting)
     {
-        if (m_bIsLifting) // Temp switch sprites
-        {
-            playerSprite.GetComponentInChildren<SpriteRenderer>().sprite = m_Carry;
-        }
-        else
-        {
-            playerSprite.GetComponentInChildren<SpriteRenderer>().sprite = m_NoCarry;
-        }
 
         if (m_Boulder == null) // Check if boulder exists in world.
         {
@@ -294,11 +292,11 @@ public class PlayerController : MonoBehaviour
             m_Boulder.transform.rotation = m_BoulderAnchor.rotation;
             // Set boulder velocity to zero.
             m_Boulder.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-            Physics2D.IgnoreLayerCollision(11, 12, true);
+            //Physics2D.IgnoreLayerCollision(11, 12, true);
         }
         else
         {
-            Physics2D.IgnoreLayerCollision(11, 12, false);
+            //Physics2D.IgnoreLayerCollision(11, 12, false);
         }
 
     }
