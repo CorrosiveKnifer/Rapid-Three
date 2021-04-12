@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
     private float m_eulerZVelocity = 0.0f;
     private float m_fRotMovementSmooth = 0.1f;
 
+    public GameObject director;
     private Animator controller;
 
     private void Awake()
@@ -89,6 +90,9 @@ public class PlayerController : MonoBehaviour
     {
         controller.SetBool("Grounded", m_bGrounded);
         controller.SetBool("Walk", (m_Rigidbody.velocity.x != 0));
+
+        SetDirection((m_Boulder.transform.position - transform.position).normalized);
+        director.SetActive(!m_bIsRegening);
     }
 
     private void FixedUpdate()
@@ -333,5 +337,14 @@ public class PlayerController : MonoBehaviour
     {
         m_bIsLifting = false;
     }
+    public void SetDirection(Vector3 dir)
+    {
+        if (dir.x == 0)
+        {
+            director.transform.rotation = Quaternion.Euler(0, 0, 0);
+            return;
+        }
 
+        director.transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Atan(dir.y / dir.x));
+    }
 }

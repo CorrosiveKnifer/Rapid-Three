@@ -260,6 +260,7 @@ GameObject:
   m_Component:
   - component: {fileID: 678544521}
   - component: {fileID: 678544522}
+  - component: {fileID: 8374300967054476354}
   m_Layer: 0
   m_Name: Power Slider
   m_TagString: Untagged
@@ -338,6 +339,19 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8374300967054476354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 678544520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29f7ceae3c371974886aca60e1e66a14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Bar: {fileID: 1345986499}
 --- !u!1 &716614458
 GameObject:
   m_ObjectHideFlags: 0
@@ -743,7 +757,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 165, y: 47.6}
+  m_AnchoredPosition: {x: 217.6, y: 43.8}
   m_SizeDelta: {x: 320, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1072133499
