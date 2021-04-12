@@ -277,11 +277,11 @@ public class PlayerController : MonoBehaviour
             m_Boulder.transform.rotation = m_BoulderAnchor.rotation;
             // Set boulder velocity to zero.
             m_Boulder.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-            //Physics2D.IgnoreLayerCollision(11, 12, true);
+            Physics2D.IgnoreLayerCollision(11, 12, true);
         }
         else
         {
-            //Physics2D.IgnoreLayerCollision(11, 12, false);
+            Physics2D.IgnoreLayerCollision(11, 12, false);
         }
 
     }
