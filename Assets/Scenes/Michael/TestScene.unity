@@ -4223,24 +4223,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4560407180150145119, guid: febe849aa873de9428f60205eca3c7f3,
         type: 3}
-      propertyPath: m_fLife
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 4560407180150145119, guid: febe849aa873de9428f60205eca3c7f3,
-        type: 3}
       propertyPath: m_Boulder
       value: 
       objectReference: {fileID: 1354918916}
-    - target: {fileID: 4560407180150145119, guid: febe849aa873de9428f60205eca3c7f3,
-        type: 3}
-      propertyPath: m_iAirJumps
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4560407180150145119, guid: febe849aa873de9428f60205eca3c7f3,
-        type: 3}
-      propertyPath: m_fCarrySpeed
-      value: 1.5
-      objectReference: {fileID: 0}
     - target: {fileID: 4560407180150145125, guid: febe849aa873de9428f60205eca3c7f3,
         type: 3}
       propertyPath: m_Name
