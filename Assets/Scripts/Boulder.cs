@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Rachael work
+/// </summary>
+/// 
 public class Boulder : MonoBehaviour
 {
     public GameObject projectilePrefab;

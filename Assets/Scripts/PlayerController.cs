@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
     private float m_eulerZVelocity = 0.0f;
     private float m_fRotMovementSmooth = 0.1f;
 
+    private Animator controller;
 
     private void Awake()
     {
@@ -73,6 +74,7 @@ public class PlayerController : MonoBehaviour
     {
         // Get Rigidbody2D
         m_Rigidbody = GetComponent<Rigidbody2D>();
+        controller = GetComponentInChildren<Animator>();
 
         // Get m_fLifeTetherRadius from boulder
         m_fLifeTetherRadius = m_Boulder.GetComponent<Boulder>().radius;
@@ -83,7 +85,12 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("Having the jumping forgiveness cooldown greater than the jump cooldown timer will create issues with jumping.\n - William de Beer");
         }
     }
+    private void Update()
+    {
 
+        controller.SetBool("Grounded", m_bGrounded);
+        controller.SetBool("Walk", (m_Rigidbody.velocity.x != 0));
+    }
     private void FixedUpdate()
     {
         bool wasGrounded = m_bGrounded;
@@ -156,6 +163,7 @@ public class PlayerController : MonoBehaviour
             t = 1.0f - (t / delta);
             playerSprite.transform.rotation = Quaternion.Slerp(playerSprite.transform.rotation, newRotation, t);
         }
+
     }
 
     // Update is called once per frame
@@ -184,7 +192,12 @@ public class PlayerController : MonoBehaviour
             m_fForgiveTimer = m_fJumpForgiveTime;
             m_bGrounded = false; // Apply jump.
 
-            
+            //making the jump animation
+            controller.SetTrigger("Jump");
+      
+
+
+
             m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, m_fJumpForce * jumpMultiplier);
             //m_Rigidbody.AddForce(new Vector2(0.0f, m_fJumpForce), ForceMode2D.Impulse);
         }
