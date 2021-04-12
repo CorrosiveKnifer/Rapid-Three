@@ -35,6 +35,8 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    public GameObject lifeTimer;
+
     //Volume Settings
     public static float MasterVolume { get; set; } = 1.0f;
     public static float SoundEffectVolume { get; set; } = 1.0f;
@@ -51,5 +53,11 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         GameTime += Time.deltaTime;
+    }
+
+    public void SetLife(float _life)
+    {
+        lifeTimer.GetComponentInChildren<Text>().text = (Mathf.Floor(_life).ToString());
+        lifeTimer.GetComponent<Image>().fillAmount = _life / 100.0f;
     }
 }

@@ -14,12 +14,26 @@ public class PlayerController : MonoBehaviour
     [Header("Attached")]
     public GameObject playerSprite;
 
+    [Header("Mobility Test")]
+    public int m_iAirJumps = 1;
+    public  int m_iJumpsLeft = 1;
+    public float m_fGrapplePull = 5.0f;
+
     [Header("Movement Values")]
     public float m_fJumpForce = 12.0f;
     public float m_fRunSpeed = 10.0f;
     public float m_fAirSpeed = 10.0f;
     public float m_fCarrySpeed = 1.0f;
     private float m_fMovementSmooth = 0.3f;
+
+    [Header("Jump Forgiveness")]
+    public float m_fJumpTimer = 0.3f;
+    float m_fJumpCooldown = 0.3f;
+
+    public float m_fForgiveTimer = 0.2f;
+    float m_fJumpForgiveTime = 0.2f;
+    public bool m_bCanJump = true;
+
 
     [Header("Ground")]
     public LayerMask m_GroundMask;
@@ -29,10 +43,12 @@ public class PlayerController : MonoBehaviour
     [Header("Life Timer")]
     public float m_fLife = 100.0f;
     public float m_fLifeTetherRadius = 10.0f;
+    public bool m_bIsRegening = false;
     public float m_fRegenRate = 1.0f;
     public float m_fDecayRate = 1.0f;
 
     [Header("Boulder")]
+    public float m_fBoulderLerpSpeed = 1.0f;
     public float m_fLiftRadius = 1.5f;
     public GameObject m_Boulder;
     public Transform m_BoulderAnchor;
@@ -57,13 +73,27 @@ public class PlayerController : MonoBehaviour
     {
         // Get Rigidbody2D
         m_Rigidbody = GetComponent<Rigidbody2D>();
+
+        // Get m_fLifeTetherRadius from boulder
+        m_fLifeTetherRadius = m_Boulder.GetComponent<Boulder>().radius;
+
+        // Warning
+        if (m_fForgiveTimer > m_fJumpTimer)
+        {
+            Debug.LogError("Having the jumping forgiveness cooldown greater than the jump cooldown timer will create issues with jumping.\n - William de Beer");
+        }
     }
 
     private void FixedUpdate()
     {
         bool wasGrounded = m_bGrounded;
-        m_bGrounded = false;
+        m_fJumpTimer += Time.fixedDeltaTime;
+        if (m_fJumpTimer > m_fJumpCooldown)
+        {
+            m_fJumpTimer = m_fJumpCooldown;
+        }
 
+        m_bCanJump = false;
         Quaternion newRotation = Quaternion.identity;
         // Ground check
         Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, 0.2f, m_GroundMask);
@@ -72,6 +102,10 @@ public class PlayerController : MonoBehaviour
             if (colliders[i].gameObject != gameObject) // If found ground near ground check
             {
                 m_bGrounded = true; // Set grounded to true.
+                m_fForgiveTimer = 0;
+                m_iJumpsLeft = m_iAirJumps;
+                m_bCanJump = true;
+
                 //newRotation = colliders[i].gameObject.transform.rotation;
                 if (!wasGrounded && m_Rigidbody.velocity.y < 0)
                 {
@@ -81,6 +115,17 @@ public class PlayerController : MonoBehaviour
                 break;
             }
         }
+
+        if (m_bGrounded && colliders.Length == 0)
+        {
+            m_fForgiveTimer += Time.fixedDeltaTime;
+
+            if (m_fJumpForgiveTime <= m_fForgiveTimer)
+            {
+                m_bGrounded = false;
+            }
+        }
+
 
         RaycastHit2D[] hits = Physics2D.RaycastAll(m_GroundCheck.position, transform.TransformDirection(Vector3.down), 0.1f, m_GroundMask);
 
@@ -121,19 +166,29 @@ public class PlayerController : MonoBehaviour
         if (m_bGrounded)
         {
             speed = m_fRunSpeed; // If the player is grounded change speed to normal
-            if (_jump) // Check for jump input and if lifting boulder.
-            {
-                m_bIsLifting = false;
-                m_bGrounded = false; // Apply jump.
-                m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, 0.0f);
-                m_Rigidbody.AddForce(new Vector2(0.0f, m_fJumpForce), ForceMode2D.Impulse);
-            }
             if (_move == 0)
             {
                 m_Rigidbody.velocity = new Vector2(0, m_Rigidbody.velocity.y);
             }
-
         }
+       
+        if (_jump && (m_fJumpTimer >= m_fJumpCooldown) && ((m_iJumpsLeft > 0 && m_iAirJumps != 0) || (m_iAirJumps == 0 && m_bGrounded))) // Check for jump input and if have enough jumps left.
+        {
+            float jumpMultiplier = 1.0f;
+            if (!m_bGrounded)
+                jumpMultiplier = 0.8f;
+
+            --m_iJumpsLeft;
+            m_fJumpTimer = 0.0f;
+            m_bIsLifting = false;
+            m_fForgiveTimer = m_fJumpForgiveTime;
+            m_bGrounded = false; // Apply jump.
+
+            
+            m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, m_fJumpForce * jumpMultiplier);
+            //m_Rigidbody.AddForce(new Vector2(0.0f, m_fJumpForce), ForceMode2D.Impulse);
+        }
+
         if (m_bIsLifting) // Check if lifting.
         {
             speed = m_fCarrySpeed; // Set speed to the carry speed.
@@ -192,11 +247,13 @@ public class PlayerController : MonoBehaviour
         {
             // Drain timer
             LifeTimer(-m_fDecayRate);
+            m_bIsRegening = false;
         }
         else
         {
             // Regen timer
             LifeTimer(m_fRegenRate);
+            m_bIsRegening = true;
         }
         if (_lifting) // Check if button is being pressed.
         {
@@ -216,10 +273,15 @@ public class PlayerController : MonoBehaviour
         if (m_bIsLifting) // While lifting
         {
             // Force boulder transformation
-            m_Boulder.transform.position = m_BoulderAnchor.position;
+            m_Boulder.transform.position += m_fBoulderLerpSpeed * Time.deltaTime * (m_BoulderAnchor.position - m_Boulder.transform.position);
             m_Boulder.transform.rotation = m_BoulderAnchor.rotation;
             // Set boulder velocity to zero.
             m_Boulder.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+            //Physics2D.IgnoreLayerCollision(11, 12, true);
+        }
+        else
+        {
+            //Physics2D.IgnoreLayerCollision(11, 12, false);
         }
 
     }
@@ -227,7 +289,6 @@ public class PlayerController : MonoBehaviour
     private void LifeTimer(float _changeModifier)
     {
         m_fLife += _changeModifier * Time.deltaTime;
-        //Debug.Log(m_fLife);
         if (m_fLife > 100.0f)
         {
             m_fLife = 100.0f;
@@ -236,7 +297,12 @@ public class PlayerController : MonoBehaviour
         {
             m_fLife = 0.0f;
         }
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.SetLife(m_fLife);
+        }
     }
+
 
     private void Flip()
     {

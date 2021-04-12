@@ -7183,6 +7183,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1323129581, guid: cb6c9fa92c7e2cb49998d7de7b244b24, type: 3}
+      propertyPath: referenceObject
+      value: 
+      objectReference: {fileID: 1490525826}
     - target: {fileID: 3686434857156278335, guid: cb6c9fa92c7e2cb49998d7de7b244b24,
         type: 3}
       propertyPath: m_LocalRotation.w
@@ -7286,32 +7290,6 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 3686434858261894450, guid: cb6c9fa92c7e2cb49998d7de7b244b24, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cb6c9fa92c7e2cb49998d7de7b244b24, type: 3}
---- !u!1 &1768246584 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3686434858261894451, guid: cb6c9fa92c7e2cb49998d7de7b244b24,
-    type: 3}
-  m_PrefabInstance: {fileID: 1768246583}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1768246585
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1768246584}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d0891ec817f0cc49938b7597621a93d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  referenceObject: {fileID: 1490525826}
-  maxDistance: 1
-  minSize: 6
-  maxSize: 8
-  physicalMotionLerp: 0.05
-  sizeMotionLerp: 0.85
-  minAngle: -3
-  maxAngle: 3
 --- !u!1001 &1796420337
 PrefabInstance:
   m_ObjectHideFlags: 0
