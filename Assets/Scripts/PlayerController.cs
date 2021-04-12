@@ -87,10 +87,10 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
-
         controller.SetBool("Grounded", m_bGrounded);
         controller.SetBool("Walk", (m_Rigidbody.velocity.x != 0));
     }
+
     private void FixedUpdate()
     {
         bool wasGrounded = m_bGrounded;

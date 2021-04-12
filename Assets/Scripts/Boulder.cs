@@ -127,6 +127,7 @@ public class Boulder : MonoBehaviour
             Magnitude = 0.0f;
         }
 
+        GameManager.instance.SetPower(Magnitude, maximumForce);
     }
     
     void GroundedUpdate()
