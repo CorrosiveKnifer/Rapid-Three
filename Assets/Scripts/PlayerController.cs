@@ -98,8 +98,11 @@ public class PlayerController : MonoBehaviour
             Vector3 screenPoint = Input.mousePosition;
             screenPoint.z = 10.0f; //distance of the plane from the camera
             Vector3 temp = Camera.main.ScreenToWorldPoint(screenPoint);
-            SetDirection((temp - transform.position).normalized);
-            director.SetActive(true);
+
+            directorThrowing.transform.up = (temp - m_Boulder.transform.position).normalized;
+            Vector3 angles = directorThrowing.transform.rotation.eulerAngles;
+            directorThrowing.transform.rotation = Quaternion.Euler(0, 0, angles.z);
+            directorThrowing.SetActive(true);
         }
         else
         {
@@ -202,7 +205,7 @@ public class PlayerController : MonoBehaviour
         {
             speed = m_fRunSpeed; // If the player is grounded change speed to normal
         }
-       
+
         if (_jump && (m_fJumpTimer >= m_fJumpCooldown) && ((m_iJumpsLeft > 0 && m_iAirJumps != 0) || (m_iAirJumps == 0 && m_bGrounded))) // Check for jump input and if have enough jumps left.
         {
             float jumpMultiplier = 1.0f;
@@ -217,7 +220,7 @@ public class PlayerController : MonoBehaviour
 
             //making the jump animation
             controller.SetTrigger("Jump");
-      
+
             m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, m_fJumpForce * jumpMultiplier);
         }
 
@@ -274,7 +277,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
         // Check if boulder is in range to be picked up.
-        bool inRange = false;      
+        bool inRange = false;
         if (Vector3.Distance(transform.position, m_Boulder.transform.position) <= m_fLiftRadius)
         {
             inRange = true;
@@ -295,7 +298,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!m_bIsLifting) // Check if currently lifting.
             {
-                if (inRange && m_bGrounded) 
+                if (inRange && m_bGrounded)
                 {
                     m_bIsLifting = true; // Lift boulder.
                 }

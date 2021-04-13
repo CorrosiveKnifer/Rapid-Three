@@ -126,6 +126,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3686434858261894461}
   - component: {fileID: 8235139453735129895}
+  - component: {fileID: 1608209652}
   m_Layer: 0
   m_Name: CameraController
   m_TagString: Untagged
@@ -168,6 +169,22 @@ MonoBehaviour:
   sizeMotionLerp: 0.85
   minAngle: -3
   maxAngle: 3
+--- !u!114 &1608209652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3686434858261894451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e71f87ea46156544c95c176f073b694e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AudioClips:
+  - {fileID: 8300000, guid: 75a66cbdacac45d4cbcdf44c5e401164, type: 3}
+  AgentSEVolume: 1
+  AgentBGVolume: 1
 --- !u!1001 &1167450820545275129
 PrefabInstance:
   m_ObjectHideFlags: 0
