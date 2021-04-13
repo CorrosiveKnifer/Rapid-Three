@@ -345,14 +345,9 @@ public class PlayerController : MonoBehaviour
     {
         m_bIsLifting = false;
     }
+
     public void SetDirection(Vector3 dir)
     {
-        if (dir.x == 0)
-        {
-            director.transform.rotation = Quaternion.Euler(0, 0, 0);
-            return;
-        }
-
-        director.transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Atan(dir.y / dir.x));
+        director.transform.up = dir;
     }
 }
