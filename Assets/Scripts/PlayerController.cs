@@ -101,6 +101,8 @@ public class PlayerController : MonoBehaviour
             Vector3 temp = Camera.main.ScreenToWorldPoint(screenPoint);
             
             directorThrowing.transform.up = (temp - m_Boulder.transform.position).normalized;
+            Vector3 angles = directorThrowing.transform.rotation.eulerAngles;
+            directorThrowing.transform.rotation = Quaternion.Euler(0, 0, angles.z);
             directorThrowing.SetActive(true);
         }
         else
