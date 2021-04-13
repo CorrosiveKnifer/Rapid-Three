@@ -9,7 +9,6 @@ using UnityEngine.UI;
 /// </summary>
 public class LevelLoader : MonoBehaviour
 {
-    public static bool hasWon = false;
     public static bool cheatsEnabled = false;
 
     public Toggle cheatToggle;
@@ -43,24 +42,11 @@ public class LevelLoader : MonoBehaviour
         {
             ResetScene();
         }
-
-
-
     }
 
     private void CheatInputs()
     {
-        if (Input.GetKeyDown(KeyCode.L)) // Lose
-        {
-            hasWon = false;
-            LoadNextLevel();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Semicolon)) // Win
-        {
-            hasWon = true;
-            LoadNextLevel();
-        }
+        
     }
 
     public void QuitGame()
@@ -74,12 +60,10 @@ public class LevelLoader : MonoBehaviour
         if (SceneManager.sceneCountInBuildSettings <= SceneManager.GetActiveScene().buildIndex + 1) // Check if index exceeds scene count
         {
             StartCoroutine(LoadLevel(0)); // Load menu
-            //SceneManager.LoadScene(0); // Load menu
         }
         else
         {
             StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1)); // Loade next scene
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); // Loade next scene
         }
     }
     public void ResetScene()

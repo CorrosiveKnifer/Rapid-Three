@@ -121,16 +121,17 @@ public class Boulder : MonoBehaviour
         }
         else
         {
-            //SinkCheck();
+            SinkCheck();
             Magnitude = 0.0f;
         }
 
         GameManager.instance.SetPower(Magnitude, maximumForce);
-        TeleportCheck();
+        //TeleportCheck();
     }
 
     void SinkCheck()
     {
+        GameManager.instance.SetActiveDangerMarker(isSinking);
         if (playerController.m_fLife > 0)
         {
             if (isSinking && !Physics2D.OverlapCircle(transform.position, 0.6f, m_GroundMask))
@@ -150,7 +151,7 @@ public class Boulder : MonoBehaviour
 
         if (playerController.transform.position.y < transform.position.y - verticalDistance)
         {
-            float speedAcross = 0.2f;
+            float speedAcross = 0.5f;
 
             projectileRB.velocity = new Vector2(0, projectileRB.velocity.y);
             transform.position = new Vector3(
