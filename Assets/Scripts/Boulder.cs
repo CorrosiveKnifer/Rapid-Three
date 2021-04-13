@@ -33,7 +33,6 @@ public class Boulder : MonoBehaviour
     public float radius = 0.0f;
 
     public PlayerController playercontro;
-    public GameObject director;
     // Start is called before the first frame update
     void Start()
     {
@@ -101,10 +100,10 @@ public class Boulder : MonoBehaviour
                     }
 
                     myPosition = GetPlayerPositon();
-                    
-                    //direction = new Vector2(x, y);
-                    //Debug.Log(direction);
-                    //GetRayDrawDirection(x, y);
+
+                    direction = new Vector2(x, y);
+                    Debug.Log(direction);
+                    GetRayDrawDirection(x, y);
                 }
 
 

@@ -92,8 +92,19 @@ public class PlayerController : MonoBehaviour
         controller.SetBool("Grounded", m_bGrounded);
         controller.SetBool("Walk", (m_IsMoving));
 
-        SetDirection((m_Boulder.transform.position - transform.position).normalized);
-        director.SetActive(!m_bIsRegening);
+        if(m_bIsLifting)
+        {
+            Vector3 screenPoint = Input.mousePosition;
+            screenPoint.z = 10.0f; //distance of the plane from the camera
+            Vector3 temp = Camera.main.ScreenToWorldPoint(screenPoint);
+            SetDirection((temp - transform.position).normalized);
+            director.SetActive(true);
+        }
+        else
+        {
+            SetDirection((m_Boulder.transform.position - transform.position).normalized);
+            director.SetActive(!m_bIsRegening);
+        }
     }
 
     private void FixedUpdate()
@@ -339,5 +350,6 @@ public class PlayerController : MonoBehaviour
     public void SetDirection(Vector3 dir)
     {
         director.transform.up = dir;
+        Debug.Log(dir);
     }
 }
