@@ -64,6 +64,7 @@ public class PlayerController : MonoBehaviour
     private float m_PlaneAngle = 0.0f;
 
     public GameObject director;
+    public GameObject directorThrowing;
     private Animator controller;
 
     private void Awake()
