@@ -35,7 +35,9 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-    public GameObject lifeTimer;
+    public Slider lifeBar;
+
+    public Slider powerBar;
 
     //Volume Settings
     public static float MasterVolume { get; set; } = 1.0f;
@@ -55,9 +57,14 @@ public class GameManager : MonoBehaviour
         GameTime += Time.deltaTime;
     }
 
-    public void SetLife(float _life)
+    public void SetLife(float _life, float max = 100.0f)
     {
-        lifeTimer.GetComponentInChildren<Text>().text = (Mathf.Floor(_life).ToString());
-        lifeTimer.GetComponent<Image>().fillAmount = _life / 100.0f;
+        //lifeTimer.GetComponentInChildren<Text>().text = (Mathf.Floor(_life).ToString());
+        //lifeTimer.GetComponent<Image>().fillAmount = _life / 100.0f;
+        lifeBar.value = _life/ max;
+    }
+    public void SetPower(float _power, float max = 100.0f)
+    {
+        powerBar.value = _power / max;
     }
 }

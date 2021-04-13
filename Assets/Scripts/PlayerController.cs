@@ -56,11 +56,14 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D m_Rigidbody;
 
+    public bool m_IsMoving = false;
     private bool m_FacingRight = false;
     private Vector3 m_Velocity = Vector3.zero;
     private float m_eulerZVelocity = 0.0f;
     private float m_fRotMovementSmooth = 0.1f;
 
+    public GameObject director;
+    private Animator controller;
 
     private void Awake()
     {
@@ -73,6 +76,7 @@ public class PlayerController : MonoBehaviour
     {
         // Get Rigidbody2D
         m_Rigidbody = GetComponent<Rigidbody2D>();
+        controller = GetComponentInChildren<Animator>();
 
         // Get m_fLifeTetherRadius from boulder
         m_fLifeTetherRadius = m_Boulder.GetComponent<Boulder>().radius;
@@ -82,6 +86,14 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogError("Having the jumping forgiveness cooldown greater than the jump cooldown timer will create issues with jumping.\n - William de Beer");
         }
+    }
+    private void Update()
+    {
+        controller.SetBool("Grounded", m_bGrounded);
+        controller.SetBool("Walk", (m_IsMoving));
+
+        SetDirection((m_Boulder.transform.position - transform.position).normalized);
+        director.SetActive(!m_bIsRegening);
     }
 
     private void FixedUpdate()
@@ -156,6 +168,7 @@ public class PlayerController : MonoBehaviour
             t = 1.0f - (t / delta);
             playerSprite.transform.rotation = Quaternion.Slerp(playerSprite.transform.rotation, newRotation, t);
         }
+
     }
 
     // Update is called once per frame
@@ -169,6 +182,11 @@ public class PlayerController : MonoBehaviour
             if (_move == 0)
             {
                 m_Rigidbody.velocity = new Vector2(0, m_Rigidbody.velocity.y);
+                m_IsMoving = false;
+            }
+            else
+            {
+                m_IsMoving = true;
             }
         }
        
@@ -184,7 +202,12 @@ public class PlayerController : MonoBehaviour
             m_fForgiveTimer = m_fJumpForgiveTime;
             m_bGrounded = false; // Apply jump.
 
-            
+            //making the jump animation
+            controller.SetTrigger("Jump");
+      
+
+
+
             m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, m_fJumpForce * jumpMultiplier);
             //m_Rigidbody.AddForce(new Vector2(0.0f, m_fJumpForce), ForceMode2D.Impulse);
         }
@@ -223,14 +246,6 @@ public class PlayerController : MonoBehaviour
 
     public void Lift(bool _lifting)
     {
-        if (m_bIsLifting) // Temp switch sprites
-        {
-            playerSprite.GetComponentInChildren<SpriteRenderer>().sprite = m_Carry;
-        }
-        else
-        {
-            playerSprite.GetComponentInChildren<SpriteRenderer>().sprite = m_NoCarry;
-        }
 
         if (m_Boulder == null) // Check if boulder exists in world.
         {
@@ -321,4 +336,8 @@ public class PlayerController : MonoBehaviour
         m_bIsLifting = false;
     }
 
+    public void SetDirection(Vector3 dir)
+    {
+        director.transform.up = dir;
+    }
 }

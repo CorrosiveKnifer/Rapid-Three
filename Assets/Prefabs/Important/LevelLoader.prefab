@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 201e3971fced9d24cb704ee27b1ba0d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cheatToggle: {fileID: 0}
   transition: {fileID: 4583483544088292444}
   transitionTime: 1
 --- !u!1 &4583483544088292434
@@ -156,7 +157,7 @@ Animator:
   m_GameObject: {fileID: 4583483544088292434}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1a78a15c152833d489d9c254acd3fba0, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

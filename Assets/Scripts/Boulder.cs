@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Rachael work
+/// </summary>
+/// 
 public class Boulder : MonoBehaviour
 {
     public GameObject projectilePrefab;
@@ -123,6 +127,7 @@ public class Boulder : MonoBehaviour
             Magnitude = 0.0f;
         }
 
+        GameManager.instance.SetPower(Magnitude, maximumForce);
     }
     
     void GroundedUpdate()
