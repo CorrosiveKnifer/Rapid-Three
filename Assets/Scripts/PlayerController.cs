@@ -310,6 +310,10 @@ public class PlayerController : MonoBehaviour
         {
             // Force boulder transformation
             m_Boulder.transform.position += m_fBoulderLerpSpeed * Time.deltaTime * (m_BoulderAnchor.position - m_Boulder.transform.position);
+            if (Vector2.Distance(m_Boulder.transform.position, m_BoulderAnchor.position) <= 0.1f)
+            {
+                m_Boulder.transform.position = m_BoulderAnchor.position;
+            }
             m_Boulder.transform.rotation = m_BoulderAnchor.rotation;
             // Set boulder velocity to zero.
             m_Boulder.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
