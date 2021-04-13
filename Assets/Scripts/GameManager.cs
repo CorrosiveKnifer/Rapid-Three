@@ -61,7 +61,8 @@ public class GameManager : MonoBehaviour
     {
         //lifeTimer.GetComponentInChildren<Text>().text = (Mathf.Floor(_life).ToString());
         //lifeTimer.GetComponent<Image>().fillAmount = _life / 100.0f;
-        lifeBar.value = _life/ max;
+        lifeBar.value = _life;
+        lifeBar.maxValue = max;
     }
     public void SetPower(float _power, float max = 100.0f)
     {
