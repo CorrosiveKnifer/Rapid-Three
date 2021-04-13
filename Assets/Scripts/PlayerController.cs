@@ -64,7 +64,6 @@ public class PlayerController : MonoBehaviour
     private float m_PlaneAngle = 0.0f;
 
     public GameObject director;
-    public GameObject directorThrowing;
     private Animator controller;
 
     private void Awake()
@@ -97,15 +96,13 @@ public class PlayerController : MonoBehaviour
         if(m_bIsLifting)
         {
             Vector3 screenPoint = Input.mousePosition;
-            screenPoint.z = Camera.main.transform.position.z * -1; //distance of the plane from the camera
+            screenPoint.z = 10.0f; //distance of the plane from the camera
             Vector3 temp = Camera.main.ScreenToWorldPoint(screenPoint);
-            
-            directorThrowing.transform.up = (temp - m_Boulder.transform.position).normalized;
-            directorThrowing.SetActive(true);
+            SetDirection((temp - transform.position).normalized);
+            director.SetActive(true);
         }
         else
         {
-            directorThrowing.SetActive(false);
             SetDirection((m_Boulder.transform.position - transform.position).normalized);
             director.SetActive(!m_bIsRegening);
         }
@@ -313,12 +310,10 @@ public class PlayerController : MonoBehaviour
         {
             // Force boulder transformation
             m_Boulder.transform.position += m_fBoulderLerpSpeed * Time.deltaTime * (m_BoulderAnchor.position - m_Boulder.transform.position);
-            
             if (Vector2.Distance(m_Boulder.transform.position, m_BoulderAnchor.position) <= 0.1f)
             {
                 m_Boulder.transform.position = m_BoulderAnchor.position;
             }
-
             m_Boulder.transform.rotation = m_BoulderAnchor.rotation;
             // Set boulder velocity to zero.
             m_Boulder.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
