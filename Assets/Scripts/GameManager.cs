@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     public Slider lifeBar;
 
     public Slider powerBar;
+    public Image dangerMarker;
 
     //Volume Settings
     public static float MasterVolume { get; set; } = 1.0f;
@@ -67,5 +68,10 @@ public class GameManager : MonoBehaviour
     public void SetPower(float _power, float max = 100.0f)
     {
         powerBar.value = _power / max;
+    }
+
+    public void SetActiveDangerMarker(bool val)
+    {
+        dangerMarker.enabled = val;
     }
 }
