@@ -212,6 +212,10 @@ public class PlayerController : MonoBehaviour
         {
             speed = m_fRunSpeed; // If the player is grounded change speed to normal
         }
+        else
+        {
+            m_bIsLifting = false;
+        }
        
         if (_jump && (m_fJumpTimer >= m_fJumpCooldown) && ((m_iJumpsLeft > 0 && m_iAirJumps != 0) || (m_iAirJumps == 0 && m_bGrounded))) // Check for jump input and if have enough jumps left.
         {
