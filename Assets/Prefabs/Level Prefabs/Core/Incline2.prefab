@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 6778256455802163208}
   - component: {fileID: 6778256455802163211}
   - component: {fileID: 6778256455802163210}
-  - component: {fileID: 4262015006977103077}
+  - component: {fileID: 6321668497915931990}
   m_Layer: 31
-  m_Name: Basic1
+  m_Name: Incline2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -320,7 +320,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!60 &4262015006977103077
+--- !u!60 &6321668497915931990
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -345,23 +345,24 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 5.1697044, y: 0.7023226}
-      - {x: 3.3950944, y: 0.70119405}
-      - {x: 0.3111226, y: 0.77907515}
-      - {x: -3.1784782, y: 1.2278771}
-      - {x: -3.5629406, y: 0.9737423}
-      - {x: -5.1152616, y: 0.95297253}
-      - {x: -5.3596687, y: 0.5988943}
-      - {x: -5.075816, y: 0.36310914}
-      - {x: -4.337726, y: 0.1653901}
-      - {x: -3.685212, y: 0.15775853}
-      - {x: -1.700285, y: -0.088522315}
-      - {x: -0.31316996, y: -0.25373203}
-      - {x: 0.030614614, y: -0.5074214}
-      - {x: 2.400947, y: -0.45231235}
-      - {x: 4.545984, y: 0.06144315}
-      - {x: 4.697385, y: 0.26510677}
-      - {x: 4.9459596, y: 0.38684642}
+    - - {x: -0.623456, y: 0.077044606}
+      - {x: -0.9473933, y: 0.18480724}
+      - {x: -1.3696203, y: 0.34373665}
+      - {x: -1.8322839, y: 0.4869017}
+      - {x: -4.2212105, y: 1.1922725}
+      - {x: -4.6943088, y: 1.4027988}
+      - {x: -4.582461, y: 0.9634106}
+      - {x: -4.2650433, y: 0.6433135}
+      - {x: 0.2929601, y: -1.2081616}
+      - {x: 3.4283519, y: -1.6709273}
+      - {x: 3.6050391, y: -1.5671778}
+      - {x: 3.9087958, y: -1.6041759}
+      - {x: 4.1724124, y: -1.7119685}
+      - {x: 4.522959, y: -1.6555969}
+      - {x: 4.6552453, y: -1.575927}
+      - {x: 4.514552, y: -1.24787}
+      - {x: 2.4958162, y: -0.8633995}
+      - {x: 0.7598536, y: -0.38795584}
 --- !u!1 &8022542880944125705
 GameObject:
   m_ObjectHideFlags: 0
@@ -388,7 +389,7 @@ Transform:
   m_GameObject: {fileID: 8022542880944125705}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2, y: 1.2, z: 1}
+  m_LocalScale: {x: 1.05, y: 0.85, z: 1}
   m_Children: []
   m_Father: {fileID: 6778256455802163206}
   m_RootOrder: 0
@@ -432,12 +433,12 @@ SpriteRenderer:
   m_SortingLayerID: -2044513719
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3483a36dc2f86aa42bfdc4a5a5e61d06, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8b4f192a5cdfbb24ebd81b2e82292f83, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 6.0266666, y: 1.7366667}
+  m_Size: {x: 20.720942, y: 6.8799996}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
