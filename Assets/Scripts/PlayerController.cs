@@ -258,11 +258,11 @@ public class PlayerController : MonoBehaviour
         {
             m_Rigidbody.gravityScale = 0.2f;
 
-            if (Mathf.Abs(m_Rigidbody.velocity.y) < 0.5f)
-            {
-                m_bIsLifting = false;
-                Animated.NotCarrying();
-            }
+            //if (Mathf.Abs(m_Rigidbody.velocity.y) < 0.5f)
+            //{
+            //    m_bIsLifting = false;
+            //    Animated.NotCarrying();
+            //}
         }
         else if (m_Rigidbody.velocity.y < 0) // Increase gravity
         {
