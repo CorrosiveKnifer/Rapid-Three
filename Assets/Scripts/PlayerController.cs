@@ -376,8 +376,8 @@ public class PlayerController : MonoBehaviour
     public void ReleaseBoulder()
     {
         m_bIsLifting = false;
-        Animated.Throw();
 
+        Animated.Throw();
     }
 
     public void SetDirection(Vector3 dir)

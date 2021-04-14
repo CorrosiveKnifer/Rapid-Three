@@ -36,12 +36,12 @@ public class CheckpointSystem : MonoBehaviour
 
     public Checkpoint[] checkpoints;
 
-    private Checkpoint active;
+    public Checkpoint active;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        active = checkpoints[0];
     }
 
     // Update is called once per frame
@@ -63,5 +63,14 @@ public class CheckpointSystem : MonoBehaviour
     public void SetActiveCheckpoint(Checkpoint checkpoint)
     {
         active = checkpoint;
+    }
+
+    public void TeleportGamebjectToActive(GameObject _object)
+    {
+        _object.transform.up = active.transform.up;
+
+        _object.transform.position = active.transform.position + (active.transform.up * 1.5f);
+
+        _object.GetComponent<Rigidbody2D>().velocity = new Vector2();
     }
 }

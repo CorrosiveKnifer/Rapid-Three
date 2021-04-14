@@ -117,4 +117,9 @@ public class CameraController : MonoBehaviour
             yield return null;
         }
     }
+
+    public bool IsOnTarget(float offset = 0.5f)
+    {
+        return Vector2.Distance(transform.position, referenceObject.transform.position) < offset;
+    }
 }
