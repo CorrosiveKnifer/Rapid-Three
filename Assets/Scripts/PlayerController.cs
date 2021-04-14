@@ -7,6 +7,8 @@ using UnityEngine;
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
+    public ParticleSystem dust;
+
     [Header("TEMP SPRITES")]
     public Sprite m_NoCarry;
     public Sprite m_Carry;
@@ -208,7 +210,8 @@ public class PlayerController : MonoBehaviour
 
 
 
-            m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, m_fJumpForce * jumpMultiplier);
+            m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, m_fJumpForce * jumpMultiplier) ;
+            CreateDust();
             //m_Rigidbody.AddForce(new Vector2(0.0f, m_fJumpForce), ForceMode2D.Impulse);
         }
 
@@ -321,6 +324,7 @@ public class PlayerController : MonoBehaviour
 
     private void Flip()
     {
+        CreateDust();
         m_FacingRight = !m_FacingRight;
 
         Vector3 theScale = transform.localScale;
@@ -340,4 +344,10 @@ public class PlayerController : MonoBehaviour
     {
         director.transform.up = dir;
     }
+
+    void CreateDust() {
+        dust.Play();
+        
+    }
+
 }
