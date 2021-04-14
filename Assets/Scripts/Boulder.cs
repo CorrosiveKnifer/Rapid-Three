@@ -108,8 +108,6 @@ public class Boulder : MonoBehaviour
                     GetRayDrawDirection(x, y);
                 }
 
-
-
                 direction.Normalize();
                 //increasing the amount of force
                 Magnitude = Mathf.Clamp(Magnitude + (forcePerSecond * Time.deltaTime), 0, maximumForce);
