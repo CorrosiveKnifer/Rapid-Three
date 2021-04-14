@@ -313,7 +313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feca92bb951bb4040982aef2384badaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dust: {fileID: 0}
+  dust: {fileID: 5124983567981739556}
   m_NoCarry: {fileID: 21300000, guid: 25fa260ea58e5df4aae72f845e2b0dfb, type: 3}
   m_Carry: {fileID: 21300000, guid: fa59dabd42e390548947c8e5bd7e6d89, type: 3}
   playerSprite: {fileID: 2393261084046985638}
@@ -344,7 +344,6 @@ MonoBehaviour:
   m_bIsLifting: 0
   m_IsMoving: 0
   director: {fileID: 7866636845004585143}
-  directorThrowing: {fileID: 7127370929352356360}
 --- !u!114 &4560407180150145118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5085,7 +5084,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -763106889
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 5
   m_RenderMode: 0
   m_SortMode: 0
