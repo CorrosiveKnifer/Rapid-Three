@@ -28,10 +28,10 @@ public class PlayerController : MonoBehaviour
 
     [Header("Jump Forgiveness")]
     public float m_fJumpTimer = 0.3f;
-    float m_fJumpCooldown = 0.3f;
+    float m_fJumpCooldown = 0.15f;
 
     public float m_fForgiveTimer = 0.2f;
-    float m_fJumpForgiveTime = 0.2f;
+    float m_fJumpForgiveTime = 0.1f;
     public bool m_bCanJump = true;
 
 
@@ -205,6 +205,10 @@ public class PlayerController : MonoBehaviour
         if (m_bGrounded)
         {
             speed = m_fRunSpeed; // If the player is grounded change speed to normal
+        }
+        else
+        {
+            m_bIsLifting = false;
         }
 
         if (_jump && (m_fJumpTimer >= m_fJumpCooldown) && ((m_iJumpsLeft > 0 && m_iAirJumps != 0) || (m_iAirJumps == 0 && m_bGrounded))) // Check for jump input and if have enough jumps left.

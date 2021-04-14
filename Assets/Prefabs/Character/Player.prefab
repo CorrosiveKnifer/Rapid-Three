@@ -334,7 +334,7 @@ MonoBehaviour:
   m_fLifeTetherRadius: 20
   m_bIsRegening: 0
   m_fRegenRate: 50
-  m_fDecayRate: 30
+  m_fDecayRate: 15
   m_fBoulderLerpSpeed: 20
   m_fLiftRadius: 1.5
   m_Boulder: {fileID: 0}
