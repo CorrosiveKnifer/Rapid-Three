@@ -7,6 +7,8 @@ using UnityEngine;
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
+    public ParticleSystem dust;
+
     [Header("TEMP SPRITES")]
     public Sprite m_NoCarry;
     public Sprite m_Carry;
@@ -28,10 +30,10 @@ public class PlayerController : MonoBehaviour
 
     [Header("Jump Forgiveness")]
     public float m_fJumpTimer = 0.3f;
-    float m_fJumpCooldown = 0.15f;
+    float m_fJumpCooldown = 0.3f;
 
     public float m_fForgiveTimer = 0.2f;
-    float m_fJumpForgiveTime = 0.1f;
+    float m_fJumpForgiveTime = 0.2f;
     public bool m_bCanJump = true;
 
 
@@ -61,10 +63,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 m_Velocity = Vector3.zero;
     private float m_eulerZVelocity = 0.0f;
     private float m_fRotMovementSmooth = 0.1f;
-    private float m_PlaneAngle = 0.0f;
 
     public GameObject director;
-    public GameObject directorThrowing;
     private Animator controller;
 
     private void Awake()
@@ -94,22 +94,8 @@ public class PlayerController : MonoBehaviour
         controller.SetBool("Grounded", m_bGrounded);
         controller.SetBool("Walk", (m_IsMoving));
 
-        if(m_bIsLifting)
-        {
-            Vector3 screenPoint = Input.mousePosition;
-            screenPoint.z = 10.0f; //distance of the plane from the camera
-            Vector3 temp = Camera.main.ScreenToWorldPoint(screenPoint);
-
-            directorThrowing.transform.up = (temp - m_Boulder.transform.position).normalized;
-            Vector3 angles = directorThrowing.transform.rotation.eulerAngles;
-            directorThrowing.transform.rotation = Quaternion.Euler(0, 0, angles.z);
-            directorThrowing.SetActive(true);
-        }
-        else
-        {
-            SetDirection((m_Boulder.transform.position - transform.position).normalized);
-            director.SetActive(!m_bIsRegening);
-        }
+        SetDirection((m_Boulder.transform.position - transform.position).normalized);
+        director.SetActive(!m_bIsRegening);
     }
 
     private void FixedUpdate()
@@ -124,7 +110,7 @@ public class PlayerController : MonoBehaviour
         m_bCanJump = false;
         Quaternion newRotation = Quaternion.identity;
         // Ground check
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, 0.25f, m_GroundMask);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, 0.2f, m_GroundMask);
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].gameObject != gameObject) // If found ground near ground check
@@ -137,7 +123,8 @@ public class PlayerController : MonoBehaviour
                 //newRotation = colliders[i].gameObject.transform.rotation;
                 if (!wasGrounded && m_Rigidbody.velocity.y < 0)
                 {
-                    // :)
+                    //float shakeAmount = m_Rigidbody.velocity.y / 10.0f;
+                    //CameraController.instance.StartShake(0.3f, 0.3f);
                 }
                 break;
             }
@@ -172,12 +159,7 @@ public class PlayerController : MonoBehaviour
             // Get angle from hit normal.
             Vector2 normal = hit.normal;
             float z = -Vector2.SignedAngle(normal, transform.TransformDirection(Vector2.up));
-            m_PlaneAngle = z;
             newRotation = Quaternion.Euler(0.0f, 0.0f, z);
-        }
-        else
-        {
-            m_PlaneAngle = 0;
         }
 
         // Smoothly move to target rotation.
@@ -189,11 +171,6 @@ public class PlayerController : MonoBehaviour
             playerSprite.transform.rotation = Quaternion.Slerp(playerSprite.transform.rotation, newRotation, t);
         }
 
-        if (m_bCanJump && m_Rigidbody.velocity.y <= 0)
-        {
-            m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, 1);
-        }
-
     }
 
     // Update is called once per frame
@@ -201,16 +178,20 @@ public class PlayerController : MonoBehaviour
     {
         // Set speed to the air time speed.
         float speed = m_fAirSpeed;
-        m_IsMoving = _move != 0;
         if (m_bGrounded)
         {
             speed = m_fRunSpeed; // If the player is grounded change speed to normal
+            if (_move == 0)
+            {
+                m_Rigidbody.velocity = new Vector2(0, m_Rigidbody.velocity.y);
+                m_IsMoving = false;
+            }
+            else
+            {
+                m_IsMoving = true;
+            }
         }
-        else
-        {
-            m_bIsLifting = false;
-        }
-
+       
         if (_jump && (m_fJumpTimer >= m_fJumpCooldown) && ((m_iJumpsLeft > 0 && m_iAirJumps != 0) || (m_iAirJumps == 0 && m_bGrounded))) // Check for jump input and if have enough jumps left.
         {
             float jumpMultiplier = 1.0f;
@@ -225,8 +206,13 @@ public class PlayerController : MonoBehaviour
 
             //making the jump animation
             controller.SetTrigger("Jump");
+      
 
-            m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, m_fJumpForce * jumpMultiplier);
+
+
+            m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, m_fJumpForce * jumpMultiplier) ;
+            CreateDust();
+            //m_Rigidbody.AddForce(new Vector2(0.0f, m_fJumpForce), ForceMode2D.Impulse);
         }
 
         if (m_bIsLifting) // Check if lifting.
@@ -235,11 +221,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Set target velocity
-        Vector2 targetVelocity = new Vector2(_move * speed, m_Rigidbody.velocity.y);
-        targetVelocity = new Vector2(
-            targetVelocity.x * Mathf.Cos(m_PlaneAngle) - targetVelocity.y * Mathf.Sin(m_PlaneAngle),
-            targetVelocity.x * Mathf.Sin(m_PlaneAngle) + targetVelocity.y * Mathf.Cos(m_PlaneAngle)
-        ); ;
+        Vector3 targetVelocity = new Vector2(_move * speed, m_Rigidbody.velocity.y);
 
         // Smoothly set to target velocity.
         m_Rigidbody.velocity = Vector3.SmoothDamp(m_Rigidbody.velocity, targetVelocity, ref m_Velocity, m_fMovementSmooth);
@@ -265,14 +247,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public static Vector2 rotate(Vector2 v, float delta)
-    {
-        return new Vector2(
-            v.x * Mathf.Cos(delta) - v.y * Mathf.Sin(delta),
-            v.x * Mathf.Sin(delta) + v.y * Mathf.Cos(delta)
-        );
-    }
-
     public void Lift(bool _lifting)
     {
 
@@ -282,7 +256,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
         // Check if boulder is in range to be picked up.
-        bool inRange = false;
+        bool inRange = false;      
         if (Vector3.Distance(transform.position, m_Boulder.transform.position) <= m_fLiftRadius)
         {
             inRange = true;
@@ -303,7 +277,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!m_bIsLifting) // Check if currently lifting.
             {
-                if (inRange && m_bGrounded)
+                if (inRange && m_bGrounded) 
                 {
                     m_bIsLifting = true; // Lift boulder.
                 }
@@ -318,10 +292,6 @@ public class PlayerController : MonoBehaviour
         {
             // Force boulder transformation
             m_Boulder.transform.position += m_fBoulderLerpSpeed * Time.deltaTime * (m_BoulderAnchor.position - m_Boulder.transform.position);
-            if (Vector2.Distance(m_Boulder.transform.position, m_BoulderAnchor.position) <= 0.1f)
-            {
-                m_Boulder.transform.position = m_BoulderAnchor.position;
-            }
             m_Boulder.transform.rotation = m_BoulderAnchor.rotation;
             // Set boulder velocity to zero.
             m_Boulder.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
@@ -354,6 +324,7 @@ public class PlayerController : MonoBehaviour
 
     private void Flip()
     {
+        CreateDust();
         m_FacingRight = !m_FacingRight;
 
         Vector3 theScale = transform.localScale;
@@ -372,6 +343,11 @@ public class PlayerController : MonoBehaviour
     public void SetDirection(Vector3 dir)
     {
         director.transform.up = dir;
-        //Debug.Log(dir);
     }
+
+    void CreateDust() {
+        dust.Play();
+        
+    }
+
 }
