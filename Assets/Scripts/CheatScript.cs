@@ -12,6 +12,7 @@ public class CheatScript : MonoBehaviour
     void Start()
     {
         FlagSprite = GetComponent<SpriteRenderer>();
+        FlagSprite.enabled = LevelLoader.cheatsEnabled;
         SetSavePoint();
     }
 

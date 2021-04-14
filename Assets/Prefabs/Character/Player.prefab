@@ -344,6 +344,7 @@ MonoBehaviour:
   m_bIsLifting: 0
   m_IsMoving: 0
   director: {fileID: 7866636845004585143}
+  directorThrowing: {fileID: 0}
 --- !u!114 &4560407180150145118
 MonoBehaviour:
   m_ObjectHideFlags: 0

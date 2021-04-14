@@ -65,7 +65,10 @@ public class PlayerController : MonoBehaviour
     private float m_fRotMovementSmooth = 0.25f;
 
     public GameObject director;
+    public GameObject directorThrowing;
     private Animator controller;
+
+    private ChangeModel Animated;
 
     private void Awake()
     {
@@ -78,7 +81,9 @@ public class PlayerController : MonoBehaviour
     {
         // Get Rigidbody2D
         m_Rigidbody = GetComponent<Rigidbody2D>();
-        controller = GetComponentInChildren<Animator>();
+        Animated = GetComponent<ChangeModel>();
+        Animated.NotCarrying();
+        //controller = GetComponentInChildren<Animator>();
 
         // Get m_fLifeTetherRadius from boulder
         m_fLifeTetherRadius = m_Boulder.GetComponent<Boulder>().radius;
@@ -91,10 +96,30 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
-        controller.SetBool("Grounded", m_bGrounded);
-        controller.SetBool("Walk", (m_IsMoving));
+        Animated.Grounded(m_bGrounded);
+        Animated.Walking(m_IsMoving);
+        //controller.SetBool("Grounded", m_bGrounded);
+        //controller.SetBool("Walk", (m_IsMoving));
 
-        if (m_IsMoving && m_bGrounded)
+        if (m_bIsLifting)
+        {
+            Vector3 screenPoint = Input.mousePosition;
+            screenPoint.z = Camera.main.transform.position.z * -1; //distance of the plane from the camera
+            Vector3 temp = Camera.main.ScreenToWorldPoint(screenPoint);
+            
+            directorThrowing.transform.up = (temp - m_Boulder.transform.position).normalized;
+            Vector3 angles = directorThrowing.transform.rotation.eulerAngles;
+            directorThrowing.transform.rotation = Quaternion.Euler(0, 0, angles.z);
+            directorThrowing.SetActive(true);
+        }
+        else
+        {
+            directorThrowing.SetActive(false);
+            SetDirection((m_Boulder.transform.position - transform.position).normalized);
+            director.SetActive(!m_bIsRegening);
+        }
+
+    if (m_IsMoving && m_bGrounded)
         {
             controller.speed = m_Rigidbody.velocity.magnitude / 9.0f;
         }
@@ -103,8 +128,6 @@ public class PlayerController : MonoBehaviour
             controller.speed = 1.0f;
         }
 
-        SetDirection((m_Boulder.transform.position - transform.position).normalized);
-        director.SetActive(!m_bIsRegening);
     }
 
     private void FixedUpdate()
@@ -216,8 +239,10 @@ public class PlayerController : MonoBehaviour
             m_bGrounded = false; // Apply jump.
 
             //making the jump animation
-            controller.SetTrigger("Jump");
-      
+            Animated.Jump();
+            Animated.NotCarrying();
+            //controller.SetTrigger("Jump");
+
             m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, m_fJumpForce * jumpMultiplier);
             CreateDust();
             //m_Rigidbody.AddForce(new Vector2(0.0f, m_fJumpForce), ForceMode2D.Impulse);
@@ -261,7 +286,7 @@ public class PlayerController : MonoBehaviour
 
     public void Lift(bool _lifting)
     {
-
+        
         if (m_Boulder == null) // Check if boulder exists in world.
         {
             Debug.Log("Boulder does not exist!");
@@ -287,15 +312,18 @@ public class PlayerController : MonoBehaviour
         }
         if (_lifting) // Check if button is being pressed.
         {
+            
             if (!m_bIsLifting) // Check if currently lifting.
             {
                 if (inRange && m_bGrounded) 
                 {
+                    Animated.Carrying();
                     m_bIsLifting = true; // Lift boulder.
                 }
             }
             else
             {
+                Animated.NotCarrying();
                 m_bIsLifting = false; // Drop boulder.
             }
         }
@@ -311,6 +339,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+
             //Physics2D.IgnoreLayerCollision(11, 12, false);
         }
 
@@ -350,6 +379,8 @@ public class PlayerController : MonoBehaviour
     public void ReleaseBoulder()
     {
         m_bIsLifting = false;
+        Animated.Throw();
+
     }
 
     public void SetDirection(Vector3 dir)
