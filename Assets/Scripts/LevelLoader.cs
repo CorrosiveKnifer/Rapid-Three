@@ -27,10 +27,6 @@ public class LevelLoader : MonoBehaviour
                 StartCoroutine(LoadLevel(0));
             }
 
-            if (cheatsEnabled)
-            {
-                CheatInputs();
-            }
         }
 
         if (cheatToggle != null)
@@ -42,11 +38,6 @@ public class LevelLoader : MonoBehaviour
         {
             ResetScene();
         }
-    }
-
-    private void CheatInputs()
-    {
-        
     }
 
     public void QuitGame()
