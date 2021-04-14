@@ -90,8 +90,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2147483648
   m_bGrounded: 0
-  maximumForce: 80
-  forcePerSecond: 55
+  maximumForce: 85
+  forcePerSecond: 150
   maximumShakeDistance: 20
   Magnitude: 0
   m_PlayerMask:
