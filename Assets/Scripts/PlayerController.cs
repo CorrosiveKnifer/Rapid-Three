@@ -64,6 +64,7 @@ public class PlayerController : MonoBehaviour
     private float m_PlaneAngle = 0.0f;
 
     public GameObject director;
+    public GameObject directorThrowing;
     private Animator controller;
 
     private void Awake()
@@ -92,23 +93,17 @@ public class PlayerController : MonoBehaviour
     {
         controller.SetBool("Grounded", m_bGrounded);
         controller.SetBool("Walk", (m_IsMoving));
-        if (m_IsMoving && m_bCanJump)
-        {
-            controller.speed = m_Rigidbody.velocity.magnitude / 9.0f;
-            // Set animation speed based on velocity
-        }
-        else
-        {
-            controller.speed = 1;
-        }
 
-        if (m_bIsLifting)
+        if(m_bIsLifting)
         {
             Vector3 screenPoint = Input.mousePosition;
             screenPoint.z = 10.0f; //distance of the plane from the camera
             Vector3 temp = Camera.main.ScreenToWorldPoint(screenPoint);
-            SetDirection((temp - transform.position).normalized);
-            director.SetActive(true);
+
+            directorThrowing.transform.up = (temp - m_Boulder.transform.position).normalized;
+            Vector3 angles = directorThrowing.transform.rotation.eulerAngles;
+            directorThrowing.transform.rotation = Quaternion.Euler(0, 0, angles.z);
+            directorThrowing.SetActive(true);
         }
         else
         {
@@ -119,7 +114,6 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log(m_Rigidbody.velocity.x);
         bool wasGrounded = m_bGrounded;
         m_fJumpTimer += Time.fixedDeltaTime;
         if (m_fJumpTimer > m_fJumpCooldown)
@@ -212,11 +206,7 @@ public class PlayerController : MonoBehaviour
         {
             speed = m_fRunSpeed; // If the player is grounded change speed to normal
         }
-        else
-        {
-            m_bIsLifting = false;
-        }
-       
+
         if (_jump && (m_fJumpTimer >= m_fJumpCooldown) && ((m_iJumpsLeft > 0 && m_iAirJumps != 0) || (m_iAirJumps == 0 && m_bGrounded))) // Check for jump input and if have enough jumps left.
         {
             float jumpMultiplier = 1.0f;
@@ -231,7 +221,7 @@ public class PlayerController : MonoBehaviour
 
             //making the jump animation
             controller.SetTrigger("Jump");
-      
+
             m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, m_fJumpForce * jumpMultiplier);
         }
 
@@ -288,7 +278,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
         // Check if boulder is in range to be picked up.
-        bool inRange = false;      
+        bool inRange = false;
         if (Vector3.Distance(transform.position, m_Boulder.transform.position) <= m_fLiftRadius)
         {
             inRange = true;
@@ -309,7 +299,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!m_bIsLifting) // Check if currently lifting.
             {
-                if (inRange && m_bGrounded) 
+                if (inRange && m_bGrounded)
                 {
                     m_bIsLifting = true; // Lift boulder.
                 }
@@ -324,6 +314,10 @@ public class PlayerController : MonoBehaviour
         {
             // Force boulder transformation
             m_Boulder.transform.position += m_fBoulderLerpSpeed * Time.deltaTime * (m_BoulderAnchor.position - m_Boulder.transform.position);
+            if (Vector2.Distance(m_Boulder.transform.position, m_BoulderAnchor.position) <= 0.1f)
+            {
+                m_Boulder.transform.position = m_BoulderAnchor.position;
+            }
             m_Boulder.transform.rotation = m_BoulderAnchor.rotation;
             // Set boulder velocity to zero.
             m_Boulder.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
