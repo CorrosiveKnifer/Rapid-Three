@@ -30,10 +30,10 @@ public class PlayerController : MonoBehaviour
 
     [Header("Jump Forgiveness")]
     public float m_fJumpTimer = 0.3f;
-    float m_fJumpCooldown = 0.3f;
+    float m_fJumpCooldown = 0.15f;
 
     public float m_fForgiveTimer = 0.2f;
-    float m_fJumpForgiveTime = 0.2f;
+    float m_fJumpForgiveTime = 0.14f;
     public bool m_bCanJump = true;
 
 
@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
     private bool m_FacingRight = false;
     private Vector3 m_Velocity = Vector3.zero;
     private float m_eulerZVelocity = 0.0f;
-    private float m_fRotMovementSmooth = 0.1f;
+    private float m_fRotMovementSmooth = 0.25f;
 
     public GameObject director;
     private Animator controller;
@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour
         m_bCanJump = false;
         Quaternion newRotation = Quaternion.identity;
         // Ground check
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, 0.2f, m_GroundMask);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, 0.5f, m_GroundMask);
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].gameObject != gameObject) // If found ground near ground check
@@ -141,7 +141,7 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        RaycastHit2D[] hits = Physics2D.RaycastAll(m_GroundCheck.position, transform.TransformDirection(Vector3.down), 0.1f, m_GroundMask);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(m_GroundCheck.position, transform.TransformDirection(Vector3.down), 1.0f, m_GroundMask);
 
         // If more than 0 hits
         if (hits.Length > 0)
@@ -176,6 +176,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     public void Move(float _move, bool _jump)
     {
+        
+
         // Set speed to the air time speed.
         float speed = m_fAirSpeed;
         if (m_bGrounded)
@@ -183,7 +185,6 @@ public class PlayerController : MonoBehaviour
             speed = m_fRunSpeed; // If the player is grounded change speed to normal
             if (_move == 0)
             {
-                m_Rigidbody.velocity = new Vector2(0, m_Rigidbody.velocity.y);
                 m_IsMoving = false;
             }
             else
@@ -207,10 +208,7 @@ public class PlayerController : MonoBehaviour
             //making the jump animation
             controller.SetTrigger("Jump");
       
-
-
-
-            m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, m_fJumpForce * jumpMultiplier) ;
+            m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, m_fJumpForce * jumpMultiplier);
             CreateDust();
             //m_Rigidbody.AddForce(new Vector2(0.0f, m_fJumpForce), ForceMode2D.Impulse);
         }
@@ -227,7 +225,11 @@ public class PlayerController : MonoBehaviour
         m_Rigidbody.velocity = Vector3.SmoothDamp(m_Rigidbody.velocity, targetVelocity, ref m_Velocity, m_fMovementSmooth);
 
         // If falling
-        if (m_Rigidbody.velocity.y < 0) // Increase gravity
+        if (m_bCanJump)
+        {
+            m_Rigidbody.gravityScale = 0.0f;
+        }
+        else if (m_Rigidbody.velocity.y < 0) // Increase gravity
         {
             m_Rigidbody.gravityScale = 5.0f;
         }
