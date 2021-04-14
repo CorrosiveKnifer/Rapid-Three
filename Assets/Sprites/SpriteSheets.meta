@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Animation/LevelLoader.meta
+guid: fce56a9d11836df4e8b145964785c25e
+=======
 guid: 8c02731c175dade4f9c129a4017fea81
+>>>>>>> origin/William-L:Assets/Sprites/SpriteSheets.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

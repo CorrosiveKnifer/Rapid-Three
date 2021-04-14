@@ -7,6 +7,8 @@ using UnityEngine;
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
+    public ParticleSystem dust;
+
     [Header("TEMP SPRITES")]
     public Sprite m_NoCarry;
     public Sprite m_Carry;
@@ -63,6 +65,7 @@ public class PlayerController : MonoBehaviour
     private float m_fRotMovementSmooth = 0.1f;
 
     public GameObject director;
+    public GameObject directorThrowing;
     private Animator controller;
 
     private void Awake()
@@ -92,8 +95,23 @@ public class PlayerController : MonoBehaviour
         controller.SetBool("Grounded", m_bGrounded);
         controller.SetBool("Walk", (m_IsMoving));
 
-        SetDirection((m_Boulder.transform.position - transform.position).normalized);
-        director.SetActive(!m_bIsRegening);
+        if(m_bIsLifting)
+        {
+            Vector3 screenPoint = Input.mousePosition;
+            screenPoint.z = Camera.main.transform.position.z * -1; //distance of the plane from the camera
+            Vector3 temp = Camera.main.ScreenToWorldPoint(screenPoint);
+            
+            directorThrowing.transform.up = (temp - m_Boulder.transform.position).normalized;
+            Vector3 angles = directorThrowing.transform.rotation.eulerAngles;
+            directorThrowing.transform.rotation = Quaternion.Euler(0, 0, angles.z);
+            directorThrowing.SetActive(true);
+        }
+        else
+        {
+            directorThrowing.SetActive(false);
+            SetDirection((m_Boulder.transform.position - transform.position).normalized);
+            director.SetActive(!m_bIsRegening);
+        }
     }
 
     private void FixedUpdate()
@@ -208,7 +226,8 @@ public class PlayerController : MonoBehaviour
 
 
 
-            m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, m_fJumpForce * jumpMultiplier);
+            m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, m_fJumpForce * jumpMultiplier) ;
+            CreateDust();
             //m_Rigidbody.AddForce(new Vector2(0.0f, m_fJumpForce), ForceMode2D.Impulse);
         }
 
@@ -321,6 +340,7 @@ public class PlayerController : MonoBehaviour
 
     private void Flip()
     {
+        CreateDust();
         m_FacingRight = !m_FacingRight;
 
         Vector3 theScale = transform.localScale;
@@ -340,4 +360,10 @@ public class PlayerController : MonoBehaviour
     {
         director.transform.up = dir;
     }
+
+    void CreateDust() {
+        dust.Play();
+        
+    }
+
 }

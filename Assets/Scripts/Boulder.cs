@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Rachael work
+/// Rachael work, William de Beer
 /// </summary>
 /// 
 public class Boulder : MonoBehaviour
@@ -11,6 +11,8 @@ public class Boulder : MonoBehaviour
     public GameObject projectilePrefab;
     public GameObject indicatorPrefab;
     Rigidbody2D projectileRB;
+
+    bool isSinking = false;
 
     [Header("Ground")]
     public LayerMask m_GroundMask;
@@ -32,7 +34,7 @@ public class Boulder : MonoBehaviour
     public LayerMask m_PlayerMask;
     public float radius = 0.0f;
 
-    public PlayerController playercontro;
+    public PlayerController playerController;
 
     // Start is called before the first frame update
     void Start()
@@ -51,12 +53,12 @@ public class Boulder : MonoBehaviour
     void Update()
     {
         //Making the indicator appear and dissapear
-        bool boulderRadius = Physics2D.OverlapCircle(transform.position, radius, m_PlayerMask);
+        bool boulderRadius = (radius > Vector2.Distance(transform.position, playerController.transform.position));
         if (boulderRadius == true)
         {
             indicatorPrefab.SetActive(false);
         }
-        if (boulderRadius == false)
+        else 
         {
             indicatorPrefab.SetActive(true);
         }
@@ -68,7 +70,7 @@ public class Boulder : MonoBehaviour
 
 
         GetRayDrawWhenAim();
-        if (playercontro.m_bIsLifting)
+        if (playerController.m_bIsLifting)
         {
             Debug.DrawRay(GetPlayerPositon(), (playerLook - GetPlayerPositon()), Color.green);
             if (Input.GetButtonDown("Fire1"))
@@ -106,30 +108,77 @@ public class Boulder : MonoBehaviour
                     GetRayDrawDirection(x, y);
                 }
 
-
-
                 direction.Normalize();
                 //increasing the amount of force
                 Magnitude = Mathf.Clamp(Magnitude + (forcePerSecond * Time.deltaTime), 0, maximumForce);
-                
-
-                //Debug.Log("Pressed left click.");
             }
             if (Input.GetButtonUp("Fire1"))
             {
-
                 ApplyForce();
-
             }
         }
         else
         {
+            SinkCheck();
             Magnitude = 0.0f;
         }
 
         GameManager.instance.SetPower(Magnitude, maximumForce);
+        //TeleportCheck();
     }
-    
+
+    void SinkCheck()
+    {
+        GameManager.instance.SetActiveDangerMarker(isSinking);
+        if (playerController.m_fLife > 0)
+        {
+            if (isSinking && !Physics2D.OverlapCircle(transform.position, 0.6f, m_GroundMask))
+            {
+                Physics2D.IgnoreLayerCollision(11, 31, false);
+                isSinking = false;
+            }
+            return;
+        }
+
+
+        //}
+
+        float verticalDistance = 5.0f;
+        isSinking = true;
+        Physics2D.IgnoreLayerCollision(11, 31, true);
+
+        if (playerController.transform.position.y < transform.position.y - verticalDistance)
+        {
+            float speedAcross = 0.5f;
+
+            projectileRB.velocity = new Vector2(0, projectileRB.velocity.y);
+            transform.position = new Vector3(
+                transform.position.x + speedAcross * Time.deltaTime * (playerController.transform.position.x - transform.position.x), transform.position.y, transform.position.z);
+        }
+    }
+
+    void TeleportCheck()
+    {
+        if (playerController.m_fLife <= 0) 
+        {
+            if (playerController.transform.position.y < transform.position.y)
+            {
+                Vector2 spawnLoc = playerController.transform.position + Vector3.up * 2.5f;
+                if (!Physics2D.OverlapCircle(spawnLoc, 0.6f, m_GroundMask))
+                {
+                    transform.position = spawnLoc;
+                    return;
+                }
+
+                transform.position = playerController.transform.position;
+            }
+            else
+            {
+                playerController.transform.position = transform.position;
+            }
+        }
+
+    }
     void GroundedUpdate()
     {
         bool wasGrounded = m_bGrounded;
@@ -142,9 +191,8 @@ public class Boulder : MonoBehaviour
                 m_bGrounded = true; // Set grounded to true.
                 if (!wasGrounded && projectileRB.velocity.y < 0)
                 {
-                    float distanceFromPlayer = Mathf.Clamp(1.0f - (Vector2.Distance(playercontro.playerSprite.transform.position, transform.position) / maximumShakeDistance), 0.0f, 1.0f);
+                    float distanceFromPlayer = Mathf.Clamp(1.0f - (Vector2.Distance(playerController.playerSprite.transform.position, transform.position) / maximumShakeDistance), 0.0f, 1.0f);
                     float fCamShake = (Mathf.Abs(projectileRB.velocity.y) / 30) * distanceFromPlayer;
-                    Debug.Log(fCamShake);
                     CameraController.instance.StartShake(fCamShake, fCamShake);
                 }
                 break;
@@ -160,19 +208,18 @@ public class Boulder : MonoBehaviour
             projectileRB.drag = 0.0f;
         }
 
-        if (projectileRB.velocity.y < 0)
-        {
-            projectileRB.gravityScale = 1.5f;
-        }
-        else
-        {
-            projectileRB.gravityScale = 1.0f;
-        }
-
+            if (projectileRB.velocity.y < 0)
+            {
+                projectileRB.gravityScale = 1.5f - (1.5f * 0.8f * (1.0f - (playerController.m_fLife / 100.0f)));
+            }
+            else
+            {
+                projectileRB.gravityScale = 1.0f - (0.8f * (1.0f - (playerController.m_fLife / 100.0f)));
+            }
     }
     void ApplyForce()
     {
-        playercontro.ReleaseBoulder();
+        playerController.ReleaseBoulder();
         Vector2 Force = direction * Magnitude;
         projectileRB.AddForce(Force, ForceMode2D.Impulse);
 

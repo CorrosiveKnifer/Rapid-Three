@@ -76,6 +76,7 @@ public class CameraController : MonoBehaviour
     public void StartShake(float magintude, float fixedTime = 1.0f)
     {
         StartCoroutine(Shake(magintude, fixedTime));
+        GetComponent<AudioAgent>().PlaySoundEffect("BoulderLand");
     }
 
     private IEnumerator Shake(float magintude, float fixedTime = 1.0f)
