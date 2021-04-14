@@ -140,9 +140,9 @@ public class PlayerController : MonoBehaviour
             if (colliders[i].gameObject != gameObject) // If found ground near ground check
             {
                 m_bGrounded = true; // Set grounded to true.
+                m_bCanJump = true;
                 m_fForgiveTimer = 0;
                 m_iJumpsLeft = m_iAirJumps;
-                m_bCanJump = true;
 
                 //newRotation = colliders[i].gameObject.transform.rotation;
                 if (!wasGrounded && m_Rigidbody.velocity.y < 0)
@@ -215,8 +215,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        
-
         if (_jump && (m_fJumpTimer >= m_fJumpCooldown) && ((m_iJumpsLeft > 0 && m_iAirJumps != 0) || (m_iAirJumps == 0 && m_bGrounded))) // Check for jump input and if have enough jumps left.
         {
             float jumpMultiplier = 1.0f;
@@ -256,7 +254,7 @@ public class PlayerController : MonoBehaviour
         // If falling
         if (m_bCanJump)
         {
-            m_Rigidbody.gravityScale = 0.2f;
+            m_Rigidbody.gravityScale = 0.3f;
 
             //if (Mathf.Abs(m_Rigidbody.velocity.y) < 0.5f)
             //{
