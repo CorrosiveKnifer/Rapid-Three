@@ -12,6 +12,9 @@ public class VentSteam : MonoBehaviour
     public float BoulderThrust = 1.0f;
     public Transform Ventlocation;
     bool SteamRisen = false;
+
+    public List<GameObject> gameObjects;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,18 +40,38 @@ public class VentSteam : MonoBehaviour
     }
     public void ForceUP()
     {
-        if (Physics2D.OverlapCircle(Ventlocation.position, 0.8f, m_PlayerMask))
+        foreach (var item in gameObjects)
         {
-            Collider2D colliders = Physics2D.OverlapCircle(Ventlocation.position, 0.8f, m_PlayerMask);
-            colliders.GetComponent<Rigidbody2D>().AddForce(Ventlocation.up * PlayerThrust, ForceMode2D.Impulse);
-            colliders.GetComponent<PlayerController>().ReleaseBoulder();
-            Debug.Log("going up");
+            if(item.layer == LayerMask.NameToLayer("Boulder"))
+            {
+
+            }
+            else if (item.layer == LayerMask.NameToLayer("Player"))
+            {
+
+            }
         }
-        if (Physics2D.OverlapCircle(Ventlocation.position, 0.8f, m_BoulderMask))
-        {
-            Collider2D colliders = Physics2D.OverlapCircle(Ventlocation.position, 0.8f, m_BoulderMask);
-            colliders.GetComponent<Rigidbody2D>().AddForce(Ventlocation.up * BoulderThrust, ForceMode2D.Impulse);
-            Debug.Log("going up");
-        }
+        //if (Physics2D.OverlapCircle(Ventlocation.position, 0.8f, m_PlayerMask))
+        //{
+        //    Collider2D colliders = Physics2D.OverlapCircle(Ventlocation.position, 0.8f, m_PlayerMask);
+        //    colliders.GetComponent<Rigidbody2D>().AddForce(Ventlocation.up * PlayerThrust, ForceMode2D.Impulse);
+        //    colliders.GetComponent<PlayerController>().ReleaseBoulder();
+        //    Debug.Log("going up");
+        //}
+        //if (Physics2D.OverlapCircle(Ventlocation.position, 0.8f, m_BoulderMask))
+        //{
+        //    Collider2D colliders = Physics2D.OverlapCircle(Ventlocation.position, 0.8f, m_BoulderMask);
+        //    colliders.GetComponent<Rigidbody2D>().AddForce(Ventlocation.up * BoulderThrust, ForceMode2D.Impulse);
+        //    Debug.Log("going up");
+        //}
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        gameObjects.Add(collision.gameObject);
+    }
+    public void OnTriggerExit2D(Collider2D collision)
+    {
+        gameObjects.Remove(collision.gameObject);
     }
 }
