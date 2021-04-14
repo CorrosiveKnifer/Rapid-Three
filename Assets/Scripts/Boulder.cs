@@ -54,20 +54,11 @@ public class Boulder : MonoBehaviour
     {
         //Making the indicator appear and dissapear
         bool boulderRadius = (radius > Vector2.Distance(transform.position, playerController.transform.position));
-        if (boulderRadius == true)
-        {
-            indicatorPrefab.SetActive(false);
-        }
-        else 
-        {
-            indicatorPrefab.SetActive(true);
-        }
-
+        indicatorPrefab.SetActive(false);
         //using mouse mechanic
         screenPoint = Input.mousePosition;
         screenPoint.z = 10.0f; //distance of the plane from the camera
         playerLook = Camera.main.ScreenToWorldPoint(screenPoint);
-
 
         GetRayDrawWhenAim();
         if (playerController.m_bIsLifting)
@@ -75,10 +66,7 @@ public class Boulder : MonoBehaviour
             Debug.DrawRay(GetPlayerPositon(), (playerLook - GetPlayerPositon()), Color.green);
             if (Input.GetButtonDown("Fire1"))
             {
-
                 Magnitude = 0.0f;
-
-
             }
             if (Input.GetButton("Fire1"))
             {
@@ -119,17 +107,14 @@ public class Boulder : MonoBehaviour
         }
         else
         {
-            SinkCheck();
             Magnitude = 0.0f;
         }
 
         GameManager.instance.SetPower(Magnitude, maximumForce);
-        //TeleportCheck();
     }
 
     void SinkCheck()
     {
-        GameManager.instance.SetActiveDangerMarker(isSinking);
         if (playerController.m_fLife > 0)
         {
             if (isSinking && !Physics2D.OverlapCircle(transform.position, 0.6f, m_GroundMask))

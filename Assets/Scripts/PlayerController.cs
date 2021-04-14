@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     public float m_fRunSpeed = 10.0f;
     public float m_fAirSpeed = 10.0f;
     public float m_fCarrySpeed = 1.0f;
-    private float m_fMovementSmooth = 0.3f;
+    private float m_fMovementSmooth = 0.1f;
 
     [Header("Jump Forgiveness")]
     public float m_fJumpTimer = 0.3f;
@@ -68,6 +68,8 @@ public class PlayerController : MonoBehaviour
     public GameObject directorThrowing;
     private Animator controller;
 
+    private ChangeModel Animated;
+
     private void Awake()
     {
         // Set player and boulder collisions to ignore.
@@ -79,7 +81,9 @@ public class PlayerController : MonoBehaviour
     {
         // Get Rigidbody2D
         m_Rigidbody = GetComponent<Rigidbody2D>();
-        controller = GetComponentInChildren<Animator>();
+        Animated = GetComponent<ChangeModel>();
+        Animated.NotCarrying();
+        //controller = GetComponentInChildren<Animator>();
 
         // Get m_fLifeTetherRadius from boulder
         m_fLifeTetherRadius = m_Boulder.GetComponent<Boulder>().radius;
@@ -92,10 +96,12 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
-        controller.SetBool("Grounded", m_bGrounded);
-        controller.SetBool("Walk", (m_IsMoving));
+        Animated.Grounded(m_bGrounded);
+        Animated.Walking(m_IsMoving);
+        //controller.SetBool("Grounded", m_bGrounded);
+        //controller.SetBool("Walk", (m_IsMoving));
 
-        if(m_bIsLifting)
+        if (m_bIsLifting)
         {
             Vector3 screenPoint = Input.mousePosition;
             screenPoint.z = Camera.main.transform.position.z * -1; //distance of the plane from the camera
@@ -112,6 +118,8 @@ public class PlayerController : MonoBehaviour
             SetDirection((m_Boulder.transform.position - transform.position).normalized);
             director.SetActive(!m_bIsRegening);
         }
+        
+
     }
 
     private void FixedUpdate()
@@ -192,8 +200,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     public void Move(float _move, bool _jump)
     {
-        
-
         // Set speed to the air time speed.
         float speed = m_fAirSpeed;
         if (m_bGrounded)
@@ -208,6 +214,14 @@ public class PlayerController : MonoBehaviour
                 m_IsMoving = true;
             }
         }
+        else
+        {
+            if (Mathf.Abs(m_Rigidbody.velocity.y) < 0.5f)
+            {
+                m_bIsLifting = false;
+                Animated.NotCarrying();
+            }
+        }
        
         if (_jump && (m_fJumpTimer >= m_fJumpCooldown) && ((m_iJumpsLeft > 0 && m_iAirJumps != 0) || (m_iAirJumps == 0 && m_bGrounded))) // Check for jump input and if have enough jumps left.
         {
@@ -215,15 +229,20 @@ public class PlayerController : MonoBehaviour
             if (!m_bGrounded)
                 jumpMultiplier = 0.8f;
 
-            --m_iJumpsLeft;
+            if (!m_bGrounded && !m_bCanJump)
+            {
+                --m_iJumpsLeft;
+            }
             m_fJumpTimer = 0.0f;
             m_bIsLifting = false;
             m_fForgiveTimer = m_fJumpForgiveTime;
             m_bGrounded = false; // Apply jump.
 
             //making the jump animation
-            controller.SetTrigger("Jump");
-      
+            Animated.Jump();
+            Animated.NotCarrying();
+            //controller.SetTrigger("Jump");
+
             m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, m_fJumpForce * jumpMultiplier);
             CreateDust();
             //m_Rigidbody.AddForce(new Vector2(0.0f, m_fJumpForce), ForceMode2D.Impulse);
@@ -243,7 +262,7 @@ public class PlayerController : MonoBehaviour
         // If falling
         if (m_bCanJump)
         {
-            m_Rigidbody.gravityScale = 0.0f;
+            m_Rigidbody.gravityScale = 0.2f;
         }
         else if (m_Rigidbody.velocity.y < 0) // Increase gravity
         {
@@ -267,7 +286,7 @@ public class PlayerController : MonoBehaviour
 
     public void Lift(bool _lifting)
     {
-
+        
         if (m_Boulder == null) // Check if boulder exists in world.
         {
             Debug.Log("Boulder does not exist!");
@@ -293,15 +312,18 @@ public class PlayerController : MonoBehaviour
         }
         if (_lifting) // Check if button is being pressed.
         {
+            
             if (!m_bIsLifting) // Check if currently lifting.
             {
                 if (inRange && m_bGrounded) 
                 {
+                    Animated.Carrying();
                     m_bIsLifting = true; // Lift boulder.
                 }
             }
             else
             {
+                Animated.NotCarrying();
                 m_bIsLifting = false; // Drop boulder.
             }
         }
@@ -317,6 +339,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+
             //Physics2D.IgnoreLayerCollision(11, 12, false);
         }
 
@@ -335,7 +358,7 @@ public class PlayerController : MonoBehaviour
         }
         if (GameManager.instance != null)
         {
-            GameManager.instance.SetLife(m_fLife);
+            //GameManager.instance.SetLife(m_fLife);
         }
     }
 
@@ -356,6 +379,8 @@ public class PlayerController : MonoBehaviour
     public void ReleaseBoulder()
     {
         m_bIsLifting = false;
+        Animated.Throw();
+
     }
 
     public void SetDirection(Vector3 dir)
