@@ -1,12 +1,45 @@
 fileFormatVersion: 2
 guid: 15eccb6cafe5b8c428d7a142437c4dd6
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -2371703043300561098
+    second: SteamAnimSpriteSheet_0
+  - first:
+      213: -1962104033466634089
+    second: SteamAnimSpriteSheet_1
+  - first:
+      213: -8098928667736567798
+    second: SteamAnimSpriteSheet_2
+  - first:
+      213: 7658846414459010868
+    second: SteamAnimSpriteSheet_3
+  - first:
+      213: -1755838848534188621
+    second: SteamAnimSpriteSheet_4
+  - first:
+      213: 2315088508509043100
+    second: SteamAnimSpriteSheet_5
+  - first:
+      213: 4992516501836825109
+    second: SteamAnimSpriteSheet_6
+  - first:
+      213: -2188718290183291137
+    second: SteamAnimSpriteSheet_7
+  - first:
+      213: -2819066808993162136
+    second: SteamAnimSpriteSheet_8
+  - first:
+      213: -4205266163436942753
+    second: SteamAnimSpriteSheet_9
+  - first:
+      213: -102105549508736204
+    second: SteamAnimSpriteSheet_10
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -34,13 +67,13 @@ TextureImporter:
     filterMode: -1
     aniso: -1
     mipBias: -100
-    wrapU: -1
-    wrapV: -1
+    wrapU: 1
+    wrapV: 1
     wrapW: -1
-  nPOTScale: 1
+  nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 0
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -49,9 +82,9 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 0
+  alphaIsTransparency: 1
   spriteTessellationDetail: -1
-  textureType: 0
+  textureType: 8
   textureShape: 1
   singleChannelComponent: 0
   maxTextureSizeSet: 0
@@ -71,13 +104,256 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: SteamAnimSpriteSheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1810
+        width: 1463
+        height: 905
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63f6b5fd5a4061fd0800000000000000
+      internalID: -2371703043300561098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SteamAnimSpriteSheet_1
+      rect:
+        serializedVersion: 2
+        x: 1463
+        y: 1810
+        width: 1463
+        height: 905
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7903cd8f6c435c4e0800000000000000
+      internalID: -1962104033466634089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SteamAnimSpriteSheet_2
+      rect:
+        serializedVersion: 2
+        x: 2926
+        y: 1810
+        width: 1463
+        height: 905
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0095526943da9f80800000000000000
+      internalID: -8098928667736567798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SteamAnimSpriteSheet_3
+      rect:
+        serializedVersion: 2
+        x: 4389
+        y: 1810
+        width: 1463
+        height: 905
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43f7a135c30b94a60800000000000000
+      internalID: 7658846414459010868
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SteamAnimSpriteSheet_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 905
+        width: 1463
+        height: 905
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bde94ebed102a7e0800000000000000
+      internalID: -1755838848534188621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SteamAnimSpriteSheet_5
+      rect:
+        serializedVersion: 2
+        x: 1463
+        y: 905
+        width: 1463
+        height: 905
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c99354d8bb8d02020800000000000000
+      internalID: 2315088508509043100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SteamAnimSpriteSheet_6
+      rect:
+        serializedVersion: 2
+        x: 2926
+        y: 905
+        width: 1463
+        height: 905
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 51282439e4bf84540800000000000000
+      internalID: 4992516501836825109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SteamAnimSpriteSheet_7
+      rect:
+        serializedVersion: 2
+        x: 4389
+        y: 905
+        width: 1463
+        height: 905
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ffe7938bf4c10a1e0800000000000000
+      internalID: -2188718290183291137
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SteamAnimSpriteSheet_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1463
+        height: 905
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86c5edb5ca9a0e8d0800000000000000
+      internalID: -2819066808993162136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SteamAnimSpriteSheet_9
+      rect:
+        serializedVersion: 2
+        x: 1463
+        y: 0
+        width: 1463
+        height: 905
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5a0f5e64b4e3a5c0800000000000000
+      internalID: -4205266163436942753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SteamAnimSpriteSheet_10
+      rect:
+        serializedVersion: 2
+        x: 2926
+        y: 0
+        width: 1463
+        height: 905
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43b8fef2b8f359ef0800000000000000
+      internalID: -102105549508736204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
