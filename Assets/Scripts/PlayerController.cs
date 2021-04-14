@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     public float m_fRunSpeed = 10.0f;
     public float m_fAirSpeed = 10.0f;
     public float m_fCarrySpeed = 1.0f;
-    private float m_fMovementSmooth = 0.3f;
+    private float m_fMovementSmooth = 0.1f;
 
     [Header("Jump Forgiveness")]
     public float m_fJumpTimer = 0.3f;
@@ -93,6 +93,15 @@ public class PlayerController : MonoBehaviour
     {
         controller.SetBool("Grounded", m_bGrounded);
         controller.SetBool("Walk", (m_IsMoving));
+
+        if (m_IsMoving && m_bGrounded)
+        {
+            controller.speed = m_Rigidbody.velocity.magnitude / 9.0f;
+        }
+        else
+        {
+            controller.speed = 1.0f;
+        }
 
         SetDirection((m_Boulder.transform.position - transform.position).normalized);
         director.SetActive(!m_bIsRegening);
@@ -176,8 +185,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     public void Move(float _move, bool _jump)
     {
-        
-
         // Set speed to the air time speed.
         float speed = m_fAirSpeed;
         if (m_bGrounded)
@@ -199,7 +206,10 @@ public class PlayerController : MonoBehaviour
             if (!m_bGrounded)
                 jumpMultiplier = 0.8f;
 
-            --m_iJumpsLeft;
+            if (!m_bGrounded && !m_bCanJump)
+            {
+                --m_iJumpsLeft;
+            }
             m_fJumpTimer = 0.0f;
             m_bIsLifting = false;
             m_fForgiveTimer = m_fJumpForgiveTime;
@@ -319,7 +329,7 @@ public class PlayerController : MonoBehaviour
         }
         if (GameManager.instance != null)
         {
-            GameManager.instance.SetLife(m_fLife);
+            //GameManager.instance.SetLife(m_fLife);
         }
     }
 

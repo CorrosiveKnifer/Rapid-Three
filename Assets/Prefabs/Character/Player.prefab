@@ -323,7 +323,7 @@ MonoBehaviour:
   m_fJumpForce: 12
   m_fRunSpeed: 10
   m_fAirSpeed: 10
-  m_fCarrySpeed: 10
+  m_fCarrySpeed: 8
   m_fJumpTimer: 0.5
   m_fForgiveTimer: 0.2
   m_bCanJump: 1

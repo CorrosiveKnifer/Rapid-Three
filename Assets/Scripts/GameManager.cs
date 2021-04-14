@@ -15,10 +15,10 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
-            Cursor.lockState = CursorLockMode.Confined; 
+            Cursor.lockState = CursorLockMode.Confined;
         }
         else
         {
@@ -35,10 +35,7 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-    public Slider lifeBar;
-
     public Slider powerBar;
-    public Image dangerMarker;
 
     //Volume Settings
     public static float MasterVolume { get; set; } = 1.0f;
@@ -58,20 +55,16 @@ public class GameManager : MonoBehaviour
         GameTime += Time.deltaTime;
     }
 
-    public void SetLife(float _life, float max = 100.0f)
-    {
-        //lifeTimer.GetComponentInChildren<Text>().text = (Mathf.Floor(_life).ToString());
-        //lifeTimer.GetComponent<Image>().fillAmount = _life / 100.0f;
-        lifeBar.value = _life;
-        lifeBar.maxValue = max;
-    }
+    //public void SetLife(float _life, float max = 100.0f)
+    //{
+    //    //lifeTimer.GetComponentInChildren<Text>().text = (Mathf.Floor(_life).ToString());
+    //    //lifeTimer.GetComponent<Image>().fillAmount = _life / 100.0f;
+    //    lifeBar.value = _life;
+    //    lifeBar.maxValue = max;
+    //}
     public void SetPower(float _power, float max = 100.0f)
     {
         powerBar.value = _power / max;
     }
-
-    public void SetActiveDangerMarker(bool val)
-    {
-        dangerMarker.enabled = val;
-    }
 }
+
