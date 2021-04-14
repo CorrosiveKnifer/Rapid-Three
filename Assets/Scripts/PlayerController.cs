@@ -118,15 +118,7 @@ public class PlayerController : MonoBehaviour
             SetDirection((m_Boulder.transform.position - transform.position).normalized);
             director.SetActive(!m_bIsRegening);
         }
-
-    if (m_IsMoving && m_bGrounded)
-        {
-            controller.speed = m_Rigidbody.velocity.magnitude / 9.0f;
-        }
-        else
-        {
-            controller.speed = 1.0f;
-        }
+        
 
     }
 
@@ -222,6 +214,14 @@ public class PlayerController : MonoBehaviour
                 m_IsMoving = true;
             }
         }
+        else
+        {
+            if (Mathf.Abs(m_Rigidbody.velocity.y) < 0.5f)
+            {
+                m_bIsLifting = false;
+                Animated.NotCarrying();
+            }
+        }
        
         if (_jump && (m_fJumpTimer >= m_fJumpCooldown) && ((m_iJumpsLeft > 0 && m_iAirJumps != 0) || (m_iAirJumps == 0 && m_bGrounded))) // Check for jump input and if have enough jumps left.
         {
@@ -262,7 +262,7 @@ public class PlayerController : MonoBehaviour
         // If falling
         if (m_bCanJump)
         {
-            m_Rigidbody.gravityScale = 0.0f;
+            m_Rigidbody.gravityScale = 0.2f;
         }
         else if (m_Rigidbody.velocity.y < 0) // Increase gravity
         {

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Rachael
+/// </summary>
 public class ChangeModel : MonoBehaviour
 {
     public GameObject PlayerAnim;
