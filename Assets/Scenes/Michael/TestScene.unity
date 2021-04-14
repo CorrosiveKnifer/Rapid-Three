@@ -3733,6 +3733,12 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!198 &1097062450 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5124983567981739556, guid: febe849aa873de9428f60205eca3c7f3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1284702806}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1119354172
 Mesh:
   m_ObjectHideFlags: 0
@@ -4379,6 +4385,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4560407180150145119, guid: febe849aa873de9428f60205eca3c7f3,
+        type: 3}
+      propertyPath: dust
+      value: 
+      objectReference: {fileID: 1097062450}
     - target: {fileID: 4560407180150145119, guid: febe849aa873de9428f60205eca3c7f3,
         type: 3}
       propertyPath: m_Boulder
