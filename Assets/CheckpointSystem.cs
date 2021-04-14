@@ -36,7 +36,7 @@ public class CheckpointSystem : MonoBehaviour
 
     public Checkpoint[] checkpoints;
 
-    private int index = 0;
+    private Checkpoint active;
 
     // Start is called before the first frame update
     void Start()
@@ -47,13 +47,13 @@ public class CheckpointSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.L))
+        if(Input.GetKeyDown(KeyCode.L) && active != null)
         {
-            player.transform.up = checkpoints[index].transform.up;
-            boulder.transform.up = checkpoints[index].transform.up;
+            player.transform.up = active.transform.up;
+            boulder.transform.up = active.transform.up;
 
-            player.transform.position = checkpoints[index].transform.position + (checkpoints[index].transform.up * 1.5f);
-            boulder.transform.position = checkpoints[index].transform.position + (checkpoints[index].transform.up * 1.5f);
+            player.transform.position = active.transform.position + (active.transform.up * 1.5f);
+            boulder.transform.position = active.transform.position + (active.transform.up * 1.5f);
 
             player.GetComponent<Rigidbody2D>().velocity = new Vector2();
             boulder.GetComponent<Rigidbody2D>().velocity = new Vector2();
@@ -62,13 +62,6 @@ public class CheckpointSystem : MonoBehaviour
 
     public void SetActiveCheckpoint(Checkpoint checkpoint)
     {
-        for (int i = 0; i < checkpoints.Length; i++)
-        {
-            if(checkpoint == checkpoints[i])
-            {
-                index = i;
-                break;
-            }
-        }
+        active = checkpoint;
     }
 }
