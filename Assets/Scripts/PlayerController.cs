@@ -214,15 +214,9 @@ public class PlayerController : MonoBehaviour
                 m_IsMoving = true;
             }
         }
-        else
-        {
-            if (Mathf.Abs(m_Rigidbody.velocity.y) < 0.5f)
-            {
-                m_bIsLifting = false;
-                Animated.NotCarrying();
-            }
-        }
-       
+
+        
+
         if (_jump && (m_fJumpTimer >= m_fJumpCooldown) && ((m_iJumpsLeft > 0 && m_iAirJumps != 0) || (m_iAirJumps == 0 && m_bGrounded))) // Check for jump input and if have enough jumps left.
         {
             float jumpMultiplier = 1.0f;
@@ -263,6 +257,12 @@ public class PlayerController : MonoBehaviour
         if (m_bCanJump)
         {
             m_Rigidbody.gravityScale = 0.2f;
+
+            //if (Mathf.Abs(m_Rigidbody.velocity.y) < 0.5f)
+            //{
+            //    m_bIsLifting = false;
+            //    Animated.NotCarrying();
+            //}
         }
         else if (m_Rigidbody.velocity.y < 0) // Increase gravity
         {
