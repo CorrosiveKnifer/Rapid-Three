@@ -15,14 +15,18 @@ public class Checkpoint : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        GetComponent<Animator>().SetBool("IsRaised", IsFlagUp);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.layer == LayerMask.NameToLayer("Boulder"))
         {
-            IsFlagUp = true;
+            if(!IsFlagUp)
+            {
+                IsFlagUp = true;
+                CheckpointSystem.instance.SetActiveCheckpoint(this);
+            }
         }
     }
 }
