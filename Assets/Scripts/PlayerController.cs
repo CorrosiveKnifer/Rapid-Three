@@ -368,6 +368,6 @@ public class PlayerController : MonoBehaviour
     public void SetDirection(Vector3 dir)
     {
         director.transform.up = dir;
-        Debug.Log(dir);
+        //Debug.Log(dir);
     }
 }
