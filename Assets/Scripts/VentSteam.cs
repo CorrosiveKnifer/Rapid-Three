@@ -10,6 +10,8 @@ public class VentSteam : MonoBehaviour
     public LayerMask m_BoulderMask;
     public float PlayerThrust = 1.0f;
     public float BoulderThrust = 1.0f;
+    public Transform Ventlocation;
+    bool SteamRisen = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,21 +21,33 @@ public class VentSteam : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(SteamRisen)
+        {
+            ForceUP();
+        }
+    }
 
+    public void SteamStart()
+    {
+        SteamRisen = true;
+    }
+    public void SteamEnd()
+    {
+        SteamRisen = false;
     }
     public void ForceUP()
     {
-        if (Physics2D.OverlapCircle(transform.position, 0.8f, m_PlayerMask))
+        if (Physics2D.OverlapCircle(Ventlocation.position, 0.8f, m_PlayerMask))
         {
-            Collider2D colliders = Physics2D.OverlapCircle(transform.position, 0.8f, m_PlayerMask);
-            colliders.GetComponent<Rigidbody2D>().AddForce(transform.up * PlayerThrust, ForceMode2D.Impulse);
+            Collider2D colliders = Physics2D.OverlapCircle(Ventlocation.position, 0.8f, m_PlayerMask);
+            colliders.GetComponent<Rigidbody2D>().AddForce(Ventlocation.up * PlayerThrust, ForceMode2D.Impulse);
             colliders.GetComponent<PlayerController>().ReleaseBoulder();
             Debug.Log("going up");
         }
-        else if (Physics2D.OverlapCircle(transform.position, 0.8f, m_BoulderMask))
+        if (Physics2D.OverlapCircle(Ventlocation.position, 0.8f, m_BoulderMask))
         {
-            Collider2D colliders = Physics2D.OverlapCircle(transform.position, 0.8f, m_BoulderMask);
-            colliders.GetComponent<Rigidbody2D>().AddForce(transform.up * BoulderThrust, ForceMode2D.Impulse);
+            Collider2D colliders = Physics2D.OverlapCircle(Ventlocation.position, 0.8f, m_BoulderMask);
+            colliders.GetComponent<Rigidbody2D>().AddForce(Ventlocation.up * BoulderThrust, ForceMode2D.Impulse);
             Debug.Log("going up");
         }
     }

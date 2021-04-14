@@ -133,8 +133,9 @@ MonoBehaviour:
   m_BoulderMask:
     serializedVersion: 2
     m_Bits: 2048
-  PlayerThrust: 15
-  BoulderThrust: 90
+  PlayerThrust: 2
+  BoulderThrust: 10
+  Ventlocation: {fileID: 6299094979968782928}
 --- !u!95 &79199006
 Animator:
   serializedVersion: 3

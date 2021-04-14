@@ -530,6 +530,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6778256455802163206}
     m_Modifications:
+    - target: {fileID: 4004626761046933076, guid: d9db08acde12dcd48b51e03017218328,
+        type: 3}
+      propertyPath: PlayerThrust
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4004626761046933076, guid: d9db08acde12dcd48b51e03017218328,
+        type: 3}
+      propertyPath: Ventlocation
+      value: 
+      objectReference: {fileID: 3633156077608692461}
+    - target: {fileID: 4004626761046933076, guid: d9db08acde12dcd48b51e03017218328,
+        type: 3}
+      propertyPath: BoulderThrust
+      value: 45
+      objectReference: {fileID: 0}
     - target: {fileID: 6299094979968782928, guid: d9db08acde12dcd48b51e03017218328,
         type: 3}
       propertyPath: m_RootOrder
