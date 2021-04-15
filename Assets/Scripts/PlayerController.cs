@@ -36,7 +36,6 @@ public class PlayerController : MonoBehaviour
     float m_fJumpForgiveTime = 0.14f;
     public bool m_bCanJump = true;
 
-
     [Header("Ground")]
     public LayerMask m_GroundMask;
     public Transform m_GroundCheck;
@@ -50,7 +49,7 @@ public class PlayerController : MonoBehaviour
     public float m_fDecayRate = 1.0f;
 
     [Header("Boulder")]
-    public float m_fBoulderLerpSpeed = 1.0f;
+    public float m_fBoulderLerpSpeed = 5.0f;
     public float m_fLiftRadius = 1.5f;
     public GameObject m_Boulder;
     public Transform m_BoulderAnchor;
@@ -140,15 +139,13 @@ public class PlayerController : MonoBehaviour
             if (colliders[i].gameObject != gameObject) // If found ground near ground check
             {
                 m_bGrounded = true; // Set grounded to true.
+                m_bCanJump = true;
                 m_fForgiveTimer = 0;
                 m_iJumpsLeft = m_iAirJumps;
-                m_bCanJump = true;
 
-                //newRotation = colliders[i].gameObject.transform.rotation;
                 if (!wasGrounded && m_Rigidbody.velocity.y < 0)
                 {
-                    //float shakeAmount = m_Rigidbody.velocity.y / 10.0f;
-                    //CameraController.instance.StartShake(0.3f, 0.3f);
+                    // :)
                 }
                 break;
             }
@@ -195,6 +192,21 @@ public class PlayerController : MonoBehaviour
             playerSprite.transform.rotation = Quaternion.Slerp(playerSprite.transform.rotation, newRotation, t);
         }
 
+        if (m_bIsLifting) // While lifting
+        {
+            // Force boulder transformation
+            m_Boulder.transform.position += m_fBoulderLerpSpeed * Time.fixedDeltaTime * (m_BoulderAnchor.position - m_Boulder.transform.position);
+            m_Boulder.transform.rotation = m_BoulderAnchor.rotation;
+            // Set boulder velocity to zero.
+            m_Boulder.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+            //Physics2D.IgnoreLayerCollision(11, 12, true);
+        }
+        else
+        {
+
+            //Physics2D.IgnoreLayerCollision(11, 12, false);
+        }
+
     }
 
     // Update is called once per frame
@@ -214,8 +226,6 @@ public class PlayerController : MonoBehaviour
                 m_IsMoving = true;
             }
         }
-
-        
 
         if (_jump && (m_fJumpTimer >= m_fJumpCooldown) && ((m_iJumpsLeft > 0 && m_iAirJumps != 0) || (m_iAirJumps == 0 && m_bGrounded))) // Check for jump input and if have enough jumps left.
         {
@@ -256,7 +266,7 @@ public class PlayerController : MonoBehaviour
         // If falling
         if (m_bCanJump)
         {
-            m_Rigidbody.gravityScale = 0.2f;
+            m_Rigidbody.gravityScale = 0.3f;
 
             //if (Mathf.Abs(m_Rigidbody.velocity.y) < 0.5f)
             //{
@@ -328,20 +338,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (m_bIsLifting) // While lifting
-        {
-            // Force boulder transformation
-            m_Boulder.transform.position += m_fBoulderLerpSpeed * Time.deltaTime * (m_BoulderAnchor.position - m_Boulder.transform.position);
-            m_Boulder.transform.rotation = m_BoulderAnchor.rotation;
-            // Set boulder velocity to zero.
-            m_Boulder.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-            //Physics2D.IgnoreLayerCollision(11, 12, true);
-        }
-        else
-        {
-
-            //Physics2D.IgnoreLayerCollision(11, 12, false);
-        }
+       
 
     }
 
