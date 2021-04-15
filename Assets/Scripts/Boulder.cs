@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 /// <summary>
-/// Rachael work, William de Beer
+/// Rachael Colaco, William de Beer
 /// </summary>
 /// 
 public class Boulder : MonoBehaviour

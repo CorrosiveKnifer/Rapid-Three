@@ -82,7 +82,6 @@ public class PlayerController : MonoBehaviour
         m_Rigidbody = GetComponent<Rigidbody2D>();
         Animated = GetComponent<ChangeModel>();
         Animated.NotCarrying();
-        //controller = GetComponentInChildren<Animator>();
 
         // Get m_fLifeTetherRadius from boulder
         m_fLifeTetherRadius = m_Boulder.GetComponent<Boulder>().radius;
@@ -95,12 +94,11 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
+        // Animations
         Animated.Grounded(m_bGrounded);
         Animated.Walking(m_IsMoving);
-        //controller.SetBool("Grounded", m_bGrounded);
-        //controller.SetBool("Walk", (m_IsMoving));
 
-        if (m_bIsLifting)
+        if (m_bIsLifting) // Throw arrow
         {
             Vector3 screenPoint = Input.mousePosition;
             screenPoint.z = Camera.main.transform.position.z * -1; //distance of the plane from the camera
@@ -111,7 +109,7 @@ public class PlayerController : MonoBehaviour
             directorThrowing.transform.rotation = Quaternion.Euler(0, 0, angles.z);
             directorThrowing.SetActive(true);
         }
-        else
+        else // Find boulder arrow
         {
             directorThrowing.SetActive(false);
             SetDirection((m_Boulder.transform.position - transform.position).normalized);
@@ -145,13 +143,13 @@ public class PlayerController : MonoBehaviour
 
                 if (!wasGrounded && m_Rigidbody.velocity.y < 0)
                 {
-                    // :)
+                    // Hi Callan
                 }
                 break;
             }
         }
 
-        if (m_bGrounded && colliders.Length == 0)
+        if (m_bGrounded && colliders.Length == 0) // Jump forgiveness
         {
             m_fForgiveTimer += Time.fixedDeltaTime;
 
@@ -160,7 +158,6 @@ public class PlayerController : MonoBehaviour
                 m_bGrounded = false;
             }
         }
-
 
         RaycastHit2D[] hits = Physics2D.RaycastAll(m_GroundCheck.position, transform.TransformDirection(Vector3.down), 1.0f, m_GroundMask);
 
@@ -197,14 +194,10 @@ public class PlayerController : MonoBehaviour
             // Force boulder transformation
             m_Boulder.transform.position += m_fBoulderLerpSpeed * Time.fixedDeltaTime * (m_BoulderAnchor.position - m_Boulder.transform.position);
             m_Boulder.transform.rotation = m_BoulderAnchor.rotation;
+
             // Set boulder velocity to zero.
             m_Boulder.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-            //Physics2D.IgnoreLayerCollision(11, 12, true);
-        }
-        else
-        {
-
-            //Physics2D.IgnoreLayerCollision(11, 12, false);
+            m_Boulder.GetComponent<Rigidbody2D>().angularVelocity = 0.0f;
         }
 
     }
@@ -231,25 +224,24 @@ public class PlayerController : MonoBehaviour
         {
             float jumpMultiplier = 1.0f;
             if (!m_bGrounded)
-                jumpMultiplier = 0.8f;
+                jumpMultiplier = 0.8f; // Air jump weaker
 
-            if (!m_bGrounded && !m_bCanJump)
+            if (!m_bGrounded && !m_bCanJump) // Air jump
             {
                 --m_iJumpsLeft;
             }
+
             m_fJumpTimer = 0.0f;
-            m_bIsLifting = false;
+            m_bIsLifting = false; // Drop rock
             m_fForgiveTimer = m_fJumpForgiveTime;
             m_bGrounded = false; // Apply jump.
 
             //making the jump animation
             Animated.Jump();
             Animated.NotCarrying();
-            //controller.SetTrigger("Jump");
 
             m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, m_fJumpForce * jumpMultiplier);
             CreateDust();
-            //m_Rigidbody.AddForce(new Vector2(0.0f, m_fJumpForce), ForceMode2D.Impulse);
         }
 
         if (m_bIsLifting) // Check if lifting.
@@ -267,12 +259,6 @@ public class PlayerController : MonoBehaviour
         if (m_bCanJump)
         {
             m_Rigidbody.gravityScale = 0.3f;
-
-            //if (Mathf.Abs(m_Rigidbody.velocity.y) < 0.5f)
-            //{
-            //    m_bIsLifting = false;
-            //    Animated.NotCarrying();
-            //}
         }
         else if (m_Rigidbody.velocity.y < 0) // Increase gravity
         {
@@ -337,9 +323,6 @@ public class PlayerController : MonoBehaviour
                 m_bIsLifting = false; // Drop boulder.
             }
         }
-
-       
-
     }
 
     private void LifeTimer(float _changeModifier)
