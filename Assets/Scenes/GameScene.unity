@@ -4587,8 +4587,8 @@ Transform:
   - {fileID: 1312805064}
   - {fileID: 841950403}
   - {fileID: 1459448795}
-  - {fileID: 1621209882}
   - {fileID: 1388580908}
+  - {fileID: 1621209882}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5536,6 +5536,7 @@ MonoBehaviour:
   - {fileID: 385922230}
   - {fileID: 1338659848}
   active: {fileID: 0}
+  deathField: {fileID: 481033682}
 --- !u!4 &1163785189
 Transform:
   m_ObjectHideFlags: 0

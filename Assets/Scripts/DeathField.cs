@@ -23,7 +23,15 @@ public class DeathField : MonoBehaviour
         }
     }
 
-    private IEnumerator CameraDelay(GameObject toTeleport)
+    public void PlayRandomAudio()
+    {
+        string[] names = GetComponent<AudioAgent>().AudioLibrary.Keys.ToArray();
+        int randNum = Random.Range(0, names.Length);
+
+        StartCoroutine(GetComponent<AudioAgent>().PlaySoundEffectSolo(names[randNum]));
+    }
+
+    public IEnumerator CameraDelay(GameObject toTeleport)
     {
         if (!flag)
             yield return null;
@@ -31,15 +39,10 @@ public class DeathField : MonoBehaviour
         flag = true;
         
         //CameraController.instance.referenceObject = CheckpointSystem.instance.active.gameObject;
-
         levelLoaderBlink.SetTrigger("Start");
 
         //randomly pick an audio line
-        
-        string[] names = GetComponent<AudioAgent>().AudioLibrary.Keys.ToArray();
-        int randNum = Random.Range(0, names.Length);
-        
-        StartCoroutine(GetComponent<AudioAgent>().PlaySoundEffectSolo(names[randNum]));
+        PlayRandomAudio();
 
         bool cond = true;
         do
