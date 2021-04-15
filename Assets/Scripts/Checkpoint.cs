@@ -15,7 +15,7 @@ public class Checkpoint : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GetComponent<Animator>().SetBool("IsRaised", IsFlagUp);
+        GetComponentInChildren<Animator>().SetBool("IsRaised", IsFlagUp);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
