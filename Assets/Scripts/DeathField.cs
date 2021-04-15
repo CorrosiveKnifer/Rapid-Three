@@ -40,7 +40,7 @@ public class DeathField : MonoBehaviour
         
         //CameraController.instance.referenceObject = CheckpointSystem.instance.active.gameObject;
         levelLoaderBlink.SetTrigger("Start");
-
+        levelLoaderBlink.SetBool("Blink", false);
         //randomly pick an audio line
         PlayRandomAudio();
 
@@ -51,7 +51,7 @@ public class DeathField : MonoBehaviour
             yield return new WaitForEndOfFrame();
         } while (!cond);
 
-        levelLoaderBlink.SetTrigger("Blink");
+        levelLoaderBlink.SetBool("Blink", true);
         CameraController.instance.referenceObject = toTeleport;
 
         CheckpointSystem.instance.TeleportGamebjectToActive(toTeleport);

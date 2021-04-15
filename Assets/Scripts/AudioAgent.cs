@@ -179,7 +179,6 @@ public class AudioAgent : MonoBehaviour
         AudioManager.GetInstance().MakeSolo(this);
 
         PlaySoundEffect(title);
-
         do
         {
             yield return new WaitForEndOfFrame();
@@ -192,6 +191,9 @@ public class AudioAgent : MonoBehaviour
 
     public void Mute()
     {
+        if (AgentBGVolume == 0f || AgentSEVolume == 0f)
+            return;
+
         savedBGVolume = AgentBGVolume;
         savedSEVolume = AgentSEVolume;
 
