@@ -1,7 +1,25 @@
 fileFormatVersion: 2
 guid: 22dddb79374869d46bd89ec985e5a4ec
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 1025139441558770262
+    second: EndPortal_0
+  - first:
+      213: -2963627342594372405
+    second: EndPortal_1
+  - first:
+      213: 28828706710417433
+    second: EndPortal_2
+  - first:
+      213: -5024922785803282064
+    second: EndPortal_3
+  - first:
+      213: -4572757560402290829
+    second: EndPortal_4
+  - first:
+      213: -7274352524407159205
+    second: EndPortal_5
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -40,7 +58,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -85,7 +103,112 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: EndPortal_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1741
+        width: 1972
+        height: 1741
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6525a5304e60a3e00800000000000000
+      internalID: 1025139441558770262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EndPortal_1
+      rect:
+        serializedVersion: 2
+        x: 1972
+        y: 1741
+        width: 1972
+        height: 1741
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bcc070642a41fd6d0800000000000000
+      internalID: -2963627342594372405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EndPortal_2
+      rect:
+        serializedVersion: 2
+        x: 3944
+        y: 1741
+        width: 1972
+        height: 1741
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 910fec65e8b666000800000000000000
+      internalID: 28828706710417433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EndPortal_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1972
+        height: 1741
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 079dd687953e34ab0800000000000000
+      internalID: -5024922785803282064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EndPortal_4
+      rect:
+        serializedVersion: 2
+        x: 1972
+        y: 0
+        width: 1972
+        height: 1741
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3775d30f93d4a80c0800000000000000
+      internalID: -4572757560402290829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
