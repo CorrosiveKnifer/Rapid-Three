@@ -13,6 +13,9 @@ public class AudioAgent : MonoBehaviour
     public float AgentSEVolume = 1f;
     public float AgentBGVolume = 1f;
 
+    private float savedSEVolume = 1f;
+    private float savedBGVolume = 1f;
+
     public class AudioPlayer
     {
         public AudioPlayer(AudioSource _source) { isSoundEffect = false; source = _source; }
@@ -27,6 +30,8 @@ public class AudioAgent : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Awake()
     {
+        AudioManager.GetInstance().AddAgent(this);
+
         AudioLibrary = new Dictionary<string, AudioPlayer>();
         for (int i = 0; i < AudioClips.Length; i++)
         {
@@ -43,6 +48,11 @@ public class AudioAgent : MonoBehaviour
             else
                 item.Value.source.volume = GetBackgroundVolume() * item.Value.volume * AgentBGVolume;
         }
+    }
+
+    private void OnDestroy()
+    {
+        AudioManager.GetInstance().RemoveAgent(this);
     }
 
     private void InitialiseAudio(string title, AudioClip clip)
@@ -114,7 +124,7 @@ public class AudioAgent : MonoBehaviour
         {
             return !player.source.isPlaying;
         }
-        Debug.LogError($"StopAudio failed because audio source was not found.");
+        Debug.LogError($"StopAudio failed because {title} source was not found.");
         return true;
     }
 
@@ -162,5 +172,39 @@ public class AudioAgent : MonoBehaviour
         PlayBackground(title, IsLooped);
 
         yield return null;
+    }
+
+    public IEnumerator PlaySoundEffectSolo(string title)
+    {
+        AudioManager.GetInstance().MakeSolo(this);
+
+        PlaySoundEffect(title);
+
+        do
+        {
+            yield return new WaitForEndOfFrame();
+        } while (!IsAudioStopped(title));
+
+        AudioManager.GetInstance().UnMuteAll();
+
+        yield return null;
+    }
+
+    public void Mute()
+    {
+        savedBGVolume = AgentBGVolume;
+        savedSEVolume = AgentSEVolume;
+
+        AgentBGVolume = 0f;
+        AgentSEVolume = 0f;
+    }
+
+    public void UnMute()
+    {
+        if(AgentBGVolume == 0f && AgentSEVolume == 0f)
+        {
+            AgentBGVolume = savedBGVolume;
+            AgentSEVolume = savedSEVolume;
+        }
     }
 }

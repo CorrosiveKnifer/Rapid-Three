@@ -34,10 +34,11 @@ public class DeathField : MonoBehaviour
         levelLoaderBlink.SetTrigger("Start");
 
         //randomly pick an audio line
-        int randNum = Random.Range(0, 10);
-        string[] names = { "AnyLower", "ChopChop", "ForgotThis", "GoodEntertainment", "Haha1", "Haha2", "Haha3", "Haha4", "PitfulAttempt", "TimeUnkind"};
+        int randNum = Random.Range(0, 9);
+        string[] names = { "AnyLower", "ChopChop", "GoodEntertainment", "Haha1", "Haha2", "Haha3", "Haha4", "PitfulAttempt", "TimeUnkind"};
         Debug.Log(names[randNum]);
-        GetComponent<AudioAgent>().PlaySoundEffect(names[randNum]);
+
+        StartCoroutine(GetComponent<AudioAgent>().PlaySoundEffectSolo(names[randNum]));
 
         bool cond = true;
         do

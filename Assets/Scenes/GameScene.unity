@@ -2758,8 +2758,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: aba1a08dc841e964291e92bb43dfb927, type: 3}
   - {fileID: 8300000, guid: 5c2aee568599bb9429ef98e968be35e2, type: 3}
   - {fileID: 8300000, guid: 508ef1a5b31657a48b11816ba60d35d4, type: 3}
-  AgentSEVolume: 1
-  AgentBGVolume: 1
+  AgentSEVolume: 0.8
+  AgentBGVolume: 0.8
 --- !u!43 &496237625
 Mesh:
   m_ObjectHideFlags: 0
@@ -6680,10 +6680,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 701658618, guid: 62af15f8b2f4b084193a37eef76c2a9b, type: 3}
-      propertyPath: m_Volume
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1101203034, guid: 62af15f8b2f4b084193a37eef76c2a9b, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
