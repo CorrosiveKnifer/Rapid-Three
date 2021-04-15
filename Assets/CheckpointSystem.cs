@@ -63,6 +63,7 @@ public class CheckpointSystem : MonoBehaviour
     public void SetActiveCheckpoint(Checkpoint checkpoint)
     {
         active = checkpoint;
+        GetComponent<AudioAgent>().PlaySoundEffect("CheckPointGong");
     }
 
     public void TeleportGamebjectToActive(GameObject _object)

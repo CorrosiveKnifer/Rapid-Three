@@ -32,6 +32,13 @@ public class DeathField : MonoBehaviour
         //CameraController.instance.referenceObject = CheckpointSystem.instance.active.gameObject;
 
         levelLoaderBlink.SetTrigger("Start");
+
+        //randomly pick an audio line
+        int randNum = Random.Range(0, 10);
+        string[] names = { "AnyLower", "ChopChop", "ForgotThis", "GoodEntertainment", "Haha1", "Haha2", "Haha3", "Haha4", "PitfulAttempt", "TimeUnkind"};
+        Debug.Log(names[randNum]);
+        GetComponent<AudioAgent>().PlaySoundEffect(names[randNum]);
+
         bool cond = true;
         do
         {
