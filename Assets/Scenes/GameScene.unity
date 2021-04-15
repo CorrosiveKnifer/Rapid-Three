@@ -2655,6 +2655,7 @@ GameObject:
   - component: {fileID: 481033684}
   - component: {fileID: 481033682}
   - component: {fileID: 481033683}
+  - component: {fileID: 481033685}
   m_Layer: 0
   m_Name: Death Zone
   m_TagString: Untagged
@@ -2734,6 +2735,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &481033685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 481033681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e71f87ea46156544c95c176f073b694e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AudioClips:
+  - {fileID: 8300000, guid: 744966f8754d42648bbd91f6e3f32127, type: 3}
+  - {fileID: 8300000, guid: 8c929ef7632821243a332f982772fc21, type: 3}
+  - {fileID: 8300000, guid: fba0e417e961d18418e213a69189ee05, type: 3}
+  - {fileID: 8300000, guid: 17d6d9fd285a14043919503a18d943b8, type: 3}
+  - {fileID: 8300000, guid: 6e5e0a31762cbeb42b0bb501594d312d, type: 3}
+  - {fileID: 8300000, guid: 651a2e97cc3cac94ab5ff63ad262292f, type: 3}
+  - {fileID: 8300000, guid: 4b8e700d912056b46834a03ed8d9dd48, type: 3}
+  - {fileID: 8300000, guid: aba1a08dc841e964291e92bb43dfb927, type: 3}
+  - {fileID: 8300000, guid: 5c2aee568599bb9429ef98e968be35e2, type: 3}
+  - {fileID: 8300000, guid: 508ef1a5b31657a48b11816ba60d35d4, type: 3}
+  AgentSEVolume: 1
+  AgentBGVolume: 1
 --- !u!43 &496237625
 Mesh:
   m_ObjectHideFlags: 0
@@ -5561,6 +5587,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1163785189}
   - component: {fileID: 1163785188}
+  - component: {fileID: 1163785190}
   m_Layer: 0
   m_Name: Checkpoints
   m_TagString: Untagged
@@ -5608,6 +5635,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1163785190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1163785187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e71f87ea46156544c95c176f073b694e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AudioClips:
+  - {fileID: 8300000, guid: d2c6a31d7a1838b469b8d34423261a17, type: 3}
+  AgentSEVolume: 1
+  AgentBGVolume: 1
 --- !u!4 &1191121278 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7319137406169040533, guid: 218d0dbd5eacfb24e8ebacb55d512d74,
