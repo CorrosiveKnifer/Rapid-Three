@@ -8,6 +8,9 @@ using UnityEngine;
 public class EndGoal : MonoBehaviour
 {
     public LevelLoader level;
+
+    public static bool HasWon = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +26,7 @@ public class EndGoal : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Boulder"))
         {
+            HasWon = true;
             level.LoadNextLevel();
         }
     }

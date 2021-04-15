@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -103,6 +104,11 @@ public class Boulder : MonoBehaviour
             if (Input.GetButtonUp("Fire1"))
             {
                 ApplyForce();
+
+                //Play SE
+                string[] names = GetComponent<AudioAgent>().AudioLibrary.Keys.ToArray();
+                int randNum = Random.Range(0, names.Length);
+                GetComponent<AudioAgent>().PlaySoundEffect(names[randNum]);
             }
         }
         else

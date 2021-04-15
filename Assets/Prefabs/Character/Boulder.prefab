@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1857313155753138972}
   - component: {fileID: 1857313155753138947}
   - component: {fileID: 1857313155753138974}
+  - component: {fileID: 4005408579276409483}
   m_Layer: 11
   m_Name: Boulder
   m_TagString: Untagged
@@ -99,6 +100,24 @@ MonoBehaviour:
     m_Bits: 4096
   radius: 10
   playerController: {fileID: 0}
+--- !u!114 &4005408579276409483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1857313155753138945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e71f87ea46156544c95c176f073b694e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AudioClips:
+  - {fileID: 8300000, guid: 3efccc96a17b0054b8ae8ca533f4f736, type: 3}
+  - {fileID: 8300000, guid: 0c365135d86d53240b1929e7e29b2452, type: 3}
+  - {fileID: 8300000, guid: c56284195d850f840ba6c828f5ff61bb, type: 3}
+  AgentSEVolume: 1
+  AgentBGVolume: 1
 --- !u!1 &1857313156407230233
 GameObject:
   m_ObjectHideFlags: 0
