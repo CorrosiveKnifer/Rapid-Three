@@ -58,7 +58,7 @@ public class CheckpointSystem : MonoBehaviour
             boulder.transform.position = active.transform.position + (active.transform.up * 1.5f);
 
             //player.GetComponent<Rigidbody2D>().velocity = new Vector2();
-            boulder.GetComponent<Rigidbody2D>().velocity = new Vector2();
+            boulder.GetComponent<Rigidbody2D>().linearVelocity = new Vector2();
 
             StartCoroutine(deathField.CameraDelay(player));
             //deathField.PlayRandomAudio();
@@ -77,6 +77,6 @@ public class CheckpointSystem : MonoBehaviour
 
         _object.transform.position = active.transform.position + (active.transform.up * 1.5f);
 
-        _object.GetComponent<Rigidbody2D>().velocity = new Vector2();
+        _object.GetComponent<Rigidbody2D>().linearVelocity = new Vector2();
     }
 }

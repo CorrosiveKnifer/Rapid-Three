@@ -142,7 +142,7 @@ public class Boulder : MonoBehaviour
         {
             float speedAcross = 0.5f;
 
-            projectileRB.velocity = new Vector2(0, projectileRB.velocity.y);
+            projectileRB.linearVelocity = new Vector2(0, projectileRB.linearVelocity.y);
             transform.position = new Vector3(
                 transform.position.x + speedAcross * Time.deltaTime * (playerController.transform.position.x - transform.position.x), transform.position.y, transform.position.z);
         }
@@ -180,10 +180,10 @@ public class Boulder : MonoBehaviour
             if (colliders[i].gameObject != gameObject) // If found ground near ground check
             {
                 m_bGrounded = true; // Set grounded to true.
-                if (!wasGrounded && projectileRB.velocity.y < 0)
+                if (!wasGrounded && projectileRB.linearVelocity.y < 0)
                 {
                     float distanceFromPlayer = Mathf.Clamp(1.0f - (Vector2.Distance(playerController.playerSprite.transform.position, transform.position) / maximumShakeDistance), 0.0f, 1.0f);
-                    float fCamShake = (Mathf.Abs(projectileRB.velocity.y) / 30) * distanceFromPlayer;
+                    float fCamShake = (Mathf.Abs(projectileRB.linearVelocity.y) / 30) * distanceFromPlayer;
                     CameraController.instance.StartShake(fCamShake, fCamShake);
                 }
                 break;
@@ -192,14 +192,14 @@ public class Boulder : MonoBehaviour
 
         if (m_bGrounded)
         {
-            projectileRB.drag = 1.0f;
+            projectileRB.linearDamping = 1.0f;
         }
         else
         {
-            projectileRB.drag = 0.0f;
+            projectileRB.linearDamping = 0.0f;
         }
 
-            if (projectileRB.velocity.y < 0)
+            if (projectileRB.linearVelocity.y < 0)
             {
                 projectileRB.gravityScale = 1.5f - (1.5f * 0.8f * (1.0f - (playerController.m_fLife / 100.0f)));
             }

@@ -141,7 +141,7 @@ public class PlayerController : MonoBehaviour
                 m_fForgiveTimer = 0;
                 m_iJumpsLeft = m_iAirJumps;
 
-                if (!wasGrounded && m_Rigidbody.velocity.y < 0)
+                if (!wasGrounded && m_Rigidbody.linearVelocity.y < 0)
                 {
                     // Hi Callan
                 }
@@ -196,7 +196,7 @@ public class PlayerController : MonoBehaviour
             m_Boulder.transform.rotation = m_BoulderAnchor.rotation;
 
             // Set boulder velocity to zero.
-            m_Boulder.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+            m_Boulder.GetComponent<Rigidbody2D>().linearVelocity = Vector3.zero;
             m_Boulder.GetComponent<Rigidbody2D>().angularVelocity = 0.0f;
         }
 
@@ -240,7 +240,7 @@ public class PlayerController : MonoBehaviour
             Animated.Jump();
             Animated.NotCarrying();
 
-            m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, m_fJumpForce * jumpMultiplier);
+            m_Rigidbody.linearVelocity = new Vector2(m_Rigidbody.linearVelocity.x, m_fJumpForce * jumpMultiplier);
             CreateDust();
         }
 
@@ -250,17 +250,17 @@ public class PlayerController : MonoBehaviour
         }
 
         // Set target velocity
-        Vector3 targetVelocity = new Vector2(_move * speed, m_Rigidbody.velocity.y);
+        Vector3 targetVelocity = new Vector2(_move * speed, m_Rigidbody.linearVelocity.y);
 
         // Smoothly set to target velocity.
-        m_Rigidbody.velocity = Vector3.SmoothDamp(m_Rigidbody.velocity, targetVelocity, ref m_Velocity, m_fMovementSmooth);
+        m_Rigidbody.linearVelocity = Vector3.SmoothDamp(m_Rigidbody.linearVelocity, targetVelocity, ref m_Velocity, m_fMovementSmooth);
 
         // If falling
         if (m_bCanJump)
         {
             m_Rigidbody.gravityScale = 0.3f;
         }
-        else if (m_Rigidbody.velocity.y < 0) // Increase gravity
+        else if (m_Rigidbody.linearVelocity.y < 0) // Increase gravity
         {
             m_Rigidbody.gravityScale = 5.0f;
         }

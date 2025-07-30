@@ -10,7 +10,7 @@ public class StickyPlatformScript : PlatformScript
 
     protected override void ApplyEffectToRigidBody2D(Rigidbody2D body)
     {
-        body.velocity = new Vector2(body.velocity.x * 0.8f, body.velocity.y);
+        body.linearVelocity = new Vector2(body.linearVelocity.x * 0.8f, body.linearVelocity.y);
         body.AddForce(Vector3.down * StickMagnitude);
         return;
     }

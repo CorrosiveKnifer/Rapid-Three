@@ -57,7 +57,7 @@ public class CheatScript : MonoBehaviour
         PlayerObject.transform.position = transform.position + (transform.up * 1.5f);
         BoulderObject.transform.position = transform.position + (transform.up * 1.5f);
 
-        PlayerObject.GetComponent<Rigidbody2D>().velocity = new Vector2();
-        BoulderObject.GetComponent<Rigidbody2D>().velocity = new Vector2();
+        PlayerObject.GetComponent<Rigidbody2D>().linearVelocity = new Vector2();
+        BoulderObject.GetComponent<Rigidbody2D>().linearVelocity = new Vector2();
     }
 }
